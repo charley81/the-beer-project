@@ -1,16 +1,23 @@
 ---
-
+import PageHeader from '../components/page-header.astro'
+import BaseLayout from '../layouts/base-layout.astro'
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <BaseLayout title="Home Page">
+      <PageHeader
+        heading="the beer project"
+        description=`the beer project I've always wanted to create a
+        site about beer. So here we are. This is a start...`
+      />
+    </BaseLayout>
+  </body>
 </html>
