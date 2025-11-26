@@ -1,4 +1,5 @@
 ---
+import BrewerySearch from '@/components/brewery-search/brewery-search'
 import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
 ---
@@ -15,9 +16,9 @@ import BaseLayout from '../layouts/base-layout.astro'
     <BaseLayout title="Home Page">
       <PageHeader
         heading="the beer project"
-        description=`the beer project I've always wanted to create a
-        site about beer. So here we are. This is a start...`
+        description=`Lets get started by finding a brewery...`
       />
+      <BrewerySearch client:load />
     </BaseLayout>
   </body>
 </html>
