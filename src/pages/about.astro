@@ -1,8 +1,11 @@
 ---
 import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
+
+import { Content as AboutInfo } from '../components/about/about-info.md'
 ---
 
 <BaseLayout>
   <PageHeader heading="about page" description="about details coming soon..." />
+  <AboutInfo />
 </BaseLayout>
