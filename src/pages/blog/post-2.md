@@ -5,7 +5,11 @@ description: "A historical journey through some of America's longest-running bre
 author: 'History Hops'
 date: '2024-11-22'
 tags: ['history', 'traditional brewing', 'american breweries']
-featuredImage: '/images/historical-breweries.jpg'
+featuredImage:
+  {
+    image: '../../images/blog/post-2.jpg',
+    description: 'An image for the post about craft beer.',
+  }
 ---
 
 # Brewing Through Time: America's Oldest Operating Breweries
