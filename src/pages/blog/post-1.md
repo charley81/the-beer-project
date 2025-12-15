@@ -1,4 +1,5 @@
 ---
+id: '1'
 title: 'Craft Beer 101: Understanding Your Local Brewery Scene'
 description: 'An introduction to the craft beer revolution and how to explore breweries near you using Open Brewery DB'
 author: 'Beer Explorer'

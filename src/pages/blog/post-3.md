@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/blog-layout.astro'
+id: '3'
 title: 'Beyond IPA: Exploring Lesser-Known Beer Styles'
 description: 'A guide to unique beer styles and breweries that specialize in them'
 author: 'Style Seeker'

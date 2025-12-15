@@ -1,5 +1,5 @@
 ---
-layout: '../../layouts/blog-layout.astro'
+id: '2'
 title: "Brewing Through Time: America's Oldest Operating Breweries"
 description: "A historical journey through some of America's longest-running breweries and their stories"
 author: 'History Hops'
