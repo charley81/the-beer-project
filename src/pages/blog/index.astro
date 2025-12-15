@@ -1,16 +1,18 @@
 ---
 import PageHeader from '@/components/page-header.astro'
 import BaseLayout from '@/layouts/base-layout.astro'
-const posts = await Astro.glob('./*.md')
+import { getCollection } from 'astro:content'
+
+const posts = await getCollection('blog')
 ---
 
 <BaseLayout>
-  <PageHeader heading="blog" description="blogs coming right here..." />
-  <ul class="mt-20">
+  <PageHeader heading="blog" description="check out this blog about beer..." />
+  <ul class="grid gap-4 mt-20">
     {
       posts.map((post) => (
-        <li>
-          <a href={post.url}>{post.frontmatter.title}</a>
+        <li class="font-bold text-xl underline">
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
         </li>
       ))
     }
