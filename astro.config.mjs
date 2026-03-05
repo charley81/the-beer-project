@@ -7,6 +7,8 @@ import react from '@astrojs/react'
 
 import netlify from '@astrojs/netlify';
 
+import db from '@astrojs/db';
+
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -14,6 +16,6 @@ export default defineConfig({
   },
 
   site: 'https://www.thebeerproject.netlify.app',
-  integrations: [react()],
+  integrations: [react(), db()],
   adapter: netlify(),
 })
