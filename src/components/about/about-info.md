@@ -1,5 +1,3 @@
-# About This Project
-
 ## The Learning Journey
 
 Welcome to my Astro exploration project! This brewery discovery application represents my hands-on journey into mastering modern web development with Astro.build. As a developer constantly seeking to expand my skillset, I've chosen Astro for its unique approach to building faster websites—delivering lightning-fast performance while maintaining the flexibility to use my favorite UI frameworks. This project serves as my personal playground to experiment with Astro's capabilities while building something genuinely useful and fun.
