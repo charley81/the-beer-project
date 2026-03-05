@@ -1,6 +1,7 @@
 ---
 import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
+import Section from '@/components/base/section.astro'
 ---
 
 <html lang="en">
@@ -13,10 +14,12 @@ import BaseLayout from '../layouts/base-layout.astro'
   </head>
   <body>
     <BaseLayout title="Home Page">
-      <PageHeader
-        heading="the beer project"
-        description=`Lets get started by finding a brewery...`
-      />
+      <Section>
+        <PageHeader
+          heading="the beer project"
+          description=`Lets get started by finding a brewery...`
+        />
+      </Section>
     </BaseLayout>
   </body>
 </html>
