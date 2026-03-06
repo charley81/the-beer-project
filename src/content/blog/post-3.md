@@ -1,5 +1,4 @@
 ---
-id: '3'
 title: 'Beyond IPA: Exploring Lesser-Known Beer Styles'
 description: 'A guide to unique beer styles and breweries that specialize in them'
 author: 'Style Seeker'
@@ -7,7 +6,7 @@ date: '2024-11-29'
 tags: ['beer styles', 'guides', 'specialty brewing']
 featuredImage:
   {
-    image: '../../images/blog/post-3.jpg',
+    image: 'src/images/blog/post-3.jpg',
     description: 'An image for the post about craft beer.',
   }
 ---

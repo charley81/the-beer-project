@@ -8,10 +8,9 @@ export const imageSchema = ({ image }: SchemaContext) =>
   })
 
 const blog = defineCollection({
-  loader: glob({ pattern: '*.md', base: './src/pages/blog' }),
+  loader: glob({ pattern: '*.md', base: './src/content/blog' }),
   schema: ({ image }) => {
     return z.object({
-      id: z.string(),
       title: z.string(),
       description: z.string(),
       author: z.string(),

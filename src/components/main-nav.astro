@@ -1,11 +1,11 @@
 ---
-
+import { UserMenu } from './user-menu'
 ---
 
-<nav class="p-4 bg-yellow-500 text-yellow-950 font-bold w-full">
+<nav class="p-8 bg-yellow-500 text-yellow-950 font-bold w-full">
   <div class="flex max-w-(--width-max-lg) mx-auto justify-between">
     <a href="/">
-      <h3>The Beer Project</h3>
+      <h3 class="text-3xl">The Beer Project</h3>
     </a>
     <ul class="flex gap-4">
       <a href="/">home</a>
@@ -14,5 +14,6 @@
       <a href="/blog">blog</a>
       <a href="/store">store</a>
     </ul>
+    <UserMenu client:load />
   </div>
 </nav>

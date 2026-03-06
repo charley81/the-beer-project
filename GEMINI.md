@@ -1,9 +1,11 @@
 # GEMINI.md
 
 ## Project Overview
+
 **The Beer Project** is a personal learning project built with **Astro 5**, **React 19**, and **Tailwind CSS 4**. It serves as a playground for exploring modern web development features including third-party API integration (Open Brewery DB), CRUD functionality, authentication, internationalization, e-commerce, and blogging.
 
 ### Key Technologies
+
 - **Framework:** [Astro](https://astro.build/) (v5.18.0)
 - **UI Library:** [React](https://react.dev/) (v19.2.0)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) (v4.1.17) with OKLCH color space.
@@ -11,25 +13,28 @@
 - **Components:** Radix UI primitives and shadcn/ui-inspired components.
 
 ## Directory Structure
+
 - `src/pages/`: Contains Astro routes. The blog posts and content are also located here under `blog/`.
 - `src/components/`: A mix of `.astro` and `.tsx` (React) components.
-    - `ui/`: Lower-level UI primitives (Button, Card, Input, etc.).
+  - `ui/`: Lower-level UI primitives (Button, Card, Input, etc.).
 - `src/layouts/`: Shared layouts like `base-layout.astro` and `blog-layout.astro`.
 - `src/content.config.ts`: Configures the **Astro Content Layer** (specifically the `blog` collection).
 - `src/styles/global.css`: Central CSS file using Tailwind 4 `@import` syntax and custom theme variables.
 
 ## Building and Running
+
 This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 
-| Command | Action |
-| :--- | :--- |
-| `pnpm install` | Install dependencies. |
-| `pnpm dev` | Start the local development server at `localhost:4321`. |
-| `pnpm build` | Build the production site. |
-| `pnpm preview` | Preview the production build locally. |
-| `pnpm astro ...` | Run Astro CLI commands directly. |
+| Command          | Action                                                  |
+| :--------------- | :------------------------------------------------------ |
+| `pnpm install`   | Install dependencies.                                   |
+| `pnpm dev`       | Start the local development server at `localhost:4321`. |
+| `pnpm build`     | Build the production site.                              |
+| `pnpm preview`   | Preview the production build locally.                   |
+| `pnpm astro ...` | Run Astro CLI commands directly.                        |
 
 ## Development Conventions
+
 - **TypeScript:** The project is configured with TypeScript (`tsconfig.json`). Ensure type safety for all new components.
 - **Tailwind 4:** Use modern Tailwind 4 patterns. Styles are mostly handled via `@apply` in `global.css` or utility classes in components.
 - **Content Collections:** The blog uses the Astro 5 `glob` loader. New blog posts should be added as `.md` files in `src/pages/blog/` and must follow the schema defined in `src/content.config.ts`.
@@ -37,9 +42,20 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - **Formatting:** Prettier is used for code formatting (`.prettierrc`).
 
 ## Planned Features (Roadmap)
-- [ ] Integration with Open Brewery DB API.
+
+- [x] Integration with Open Brewery DB API.
+- [x] CRUD functionality for managing blog posts with Astro DB + Turso.
+- [x] User authentication with Better-Auth (Sign Up, Login, Logout).
 - [ ] CRUD functionality for managing beer/brewery favorites.
-- [ ] User authentication.
 - [ ] Internationalization (i18n) support.
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
+
+## Recent Progress (Auth Setup)
+
+- [x] Configured Better-Auth with Astro DB (LibSQL/Turso) and Drizzle adapter.
+- [x] Created `src/lib/auth.ts` (server-side) and `src/lib/auth-client.ts` (client-side).
+- [x] Implemented catch-all API route at `src/pages/api/auth/[...auth].ts`.
+- [x] Built React `AuthForm` component for Sign Up and Login.
+- [x] Implemented client-side `UserMenu` in `main-nav.astro` to support authentication state on static pages.
+- [x] Successfully verified full authentication lifecycle.
