@@ -37,9 +37,18 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - **Formatting:** Prettier is used for code formatting (`.prettierrc`).
 
 ## Planned Features (Roadmap)
-- [ ] Integration with Open Brewery DB API.
+- [x] Integration with Open Brewery DB API.
+- [x] CRUD functionality for managing blog posts with Astro DB + Turso.
+- [x] User authentication with Better-Auth (Sign Up, Login, Logout).
 - [ ] CRUD functionality for managing beer/brewery favorites.
-- [ ] User authentication.
 - [ ] Internationalization (i18n) support.
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
+
+## Recent Progress (Auth Setup)
+- [x] Configured Better-Auth with Astro DB (LibSQL/Turso) and Drizzle adapter.
+- [x] Created `src/lib/auth.ts` (server-side) and `src/lib/auth-client.ts` (client-side).
+- [x] Implemented catch-all API route at `src/pages/api/auth/[...auth].ts`.
+- [x] Built React `AuthForm` component for Sign Up and Login.
+- [x] Implemented client-side `UserMenu` in `main-nav.astro` to support authentication state on static pages.
+- [x] Successfully verified full authentication lifecycle.
