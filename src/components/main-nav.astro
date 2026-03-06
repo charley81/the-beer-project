@@ -1,12 +1,5 @@
 ---
-import { auth } from '../lib/auth'
 import { UserMenu } from './user-menu'
-
-const session = await auth.api.getSession({
-  headers: Astro.request.headers,
-})
-
-const user = session?.user
 ---
 
 <nav class="p-8 bg-yellow-500 text-yellow-950 font-bold w-full">
@@ -24,19 +17,3 @@ const user = session?.user
     <UserMenu client:load />
   </div>
 </nav>
-
-<script>
-  // Add logout functionality using the auth-client
-  import { signOut } from '../lib/auth-client'
-
-  const logoutBtn = document.getElementById('logout-btn')
-  logoutBtn?.addEventListener('click', async () => {
-    await signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          window.location.href = '/' // Redirect home after logout
-        },
-      },
-    })
-  })
-</script>
