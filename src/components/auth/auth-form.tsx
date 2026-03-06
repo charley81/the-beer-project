@@ -61,7 +61,7 @@ export function AuthForm({ type }: { type: 'login' | 'signup' }) {
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-8">
           {type === 'signup' && (
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
@@ -96,7 +96,7 @@ export function AuthForm({ type }: { type: 'login' | 'signup' }) {
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        <CardFooter className="flex flex-col gap-4 mt-8">
           <Button type="submit" className="w-full" disabled={loading}>
             {loading
               ? 'Processing...'
