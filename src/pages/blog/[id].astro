@@ -14,7 +14,7 @@ const { post } = Astro.props
 const { Content } = await render(post)
 ---
 
-<BlogLayout>
+<BlogLayout frontmatter={post.data}>
   <h1>{post.data.title.toUpperCase()}</h1>
   <Content />
 </BlogLayout>

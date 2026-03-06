@@ -1,5 +1,4 @@
 ---
-id: '1'
 title: 'Craft Beer 101: Understanding Your Local Brewery Scene'
 description: 'An introduction to the craft beer revolution and how to explore breweries near you using Open Brewery DB'
 author: 'Beer Explorer'
@@ -7,7 +6,7 @@ date: '2024-11-15'
 tags: ['craft beer', 'beginner', 'local breweries']
 featuredImage:
   {
-    image: '../../images/blog/post-1.jpg',
+    image: 'src/images/blog/post-1.jpg',
     description: 'An image for the post about craft beer.',
   }
 ---
