@@ -21,11 +21,27 @@ export async function getBreweriesByCity(
   city: string,
   perPage = 5,
 ): Promise<Brewery[]> {
-  const res = await fetch(`${BASE_URL}?by_city=${city}&per_page=${perPage}`)
+  const params = new URLSearchParams({
+    by_city: city,
+    per_page: perPage.toString(),
+  })
+  const response = await fetch(`${BASE_URL}?${params.toString()}`)
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch breweries')
+  if (!response.ok) {
+    throw new Error(`Failed to fetch breweries: ${response.statusText}`)
   }
 
-  return res.json()
+  const data = (await response.json()) as Brewery[]
+  return data
+}
+
+export async function getBreweryById(id: string): Promise<Brewery> {
+  const response = await fetch(`${BASE_URL}/${id}`)
+
+  if (!response.ok) {
+    throw new Error(`Brewery with ID ${id} not found.`)
+  }
+
+  const data = (await response.json()) as Brewery
+  return data
 }
