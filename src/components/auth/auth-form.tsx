@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn, signUp } from '../../lib/auth-client'
+import { signIn, signUp } from '@/lib/auth-client'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
@@ -14,7 +14,8 @@ import {
   CardTitle,
 } from '../ui/card'
 
-export function AuthForm({ type }: { type: 'login' | 'signup' }) {
+export function AuthForm() {
+  const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
@@ -27,42 +28,56 @@ export function AuthForm({ type }: { type: 'login' | 'signup' }) {
     setError(null)
 
     try {
-      if (type === 'signup') {
-        const { error } = await signUp.email({
-          email,
-          password,
-          name,
-          callbackURL: '/',
-        })
-        if (error) setError(error.message || 'Signup Faild')
+      if (mode === 'signup') {
+        const { error } = await signUp.email(
+          {
+            email,
+            password,
+            name,
+            callbackURL: '/',
+          },
+          {
+            onSuccess: () => {
+              window.location.href = '/'
+            },
+          },
+        )
+        if (error) setError(error.message || 'Signup Failed')
       } else {
-        const { error } = await signIn.email({
-          email,
-          password,
-          callbackURL: '/',
-        })
+        const { error } = await signIn.email(
+          {
+            email,
+            password,
+            callbackURL: '/',
+          },
+          {
+            onSuccess: () => {
+              window.location.href = '/'
+            },
+          },
+        )
         if (error) setError(error.message || 'Login Failed')
       }
-    } catch (error) {
-      setError('An unexpected error ocurred')
+    } catch (err) {
+      setError('An unexpected error occurred')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-lg mx-auto">
       <CardHeader>
-        <CardTitle>{type === 'login' ? 'Login' : 'CreateAccount'}</CardTitle>
+        <CardTitle>{mode === 'login' ? 'Login' : 'Create Account'}</CardTitle>
         <CardDescription>
-          {type === 'login'
-            ? 'Enter your email to sign in'
-            : 'Enter yourdetails to sign up'}
+          {mode === 'login'
+            ? 'Enter your email to sing in to your account'
+            : 'Enter your details to create a new account'}
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-8">
-          {type === 'signup' && (
+        <CardContent className="space-y-4">
+          {mode === 'signup' && (
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -79,7 +94,7 @@ export function AuthForm({ type }: { type: 'login' | 'signup' }) {
             <Input
               id="email"
               type="email"
-              placeholder="name@example.com"
+              placeholder="jdoe@example.com"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -91,44 +106,26 @@ export function AuthForm({ type }: { type: 'login' | 'signup' }) {
               id="password"
               type="password"
               required
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
         </CardContent>
-        <CardFooter className="flex flex-col gap-4 mt-8">
+        <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading
-              ? 'Processing...'
-              : type === 'login'
-                ? 'Sign In'
-                : 'Sign Up'}
+            {loading ? 'Processing...' : mode === 'login' ? 'login' : 'Sign Up'}
           </Button>
-          <p className="text-sm text-center">
-            {type === 'login' ? (
-              <>
-                Don't have an account?{' '}
-                <a
-                  href="/signup"
-                  className="text-blue-500
-       hover:underline"
-                >
-                  Sign up
-                </a>
-              </>
-            ) : (
-              <>
-                Already have an account?{' '}
-                <a
-                  href="/login"
-                  className="text-blue-500
-       hover:underline"
-                >
-                  Log in
-                </a>
-              </>
-            )}
-          </p>
+          <Button
+            type="button"
+            variant="link"
+            className="w-full"
+            onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+          >
+            {mode === 'login'
+              ? "Don't have an account? Sign up"
+              : 'Already have an account? Login'}
+          </Button>
         </CardFooter>
       </form>
     </Card>

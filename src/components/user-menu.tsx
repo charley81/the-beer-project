@@ -47,7 +47,7 @@ export function UserMenu() {
 
   return (
     <a
-      href="/signup"
+      href="/auth"
       className="hover:underline border-2 border-yellow-950 px-3 py-1
       rounded-sm uppercase text-sm font-bold"
     >
