@@ -4,22 +4,11 @@ import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <BaseLayout title="Home Page">
-      <Section>
-        <PageHeader
-          heading="the beer project"
-          description=`Lets get started by finding a brewery...`
-        />
-      </Section>
-    </BaseLayout>
-  </body>
-</html>
+<BaseLayout title="Home Page">
+  <Section>
+    <PageHeader
+      heading="the beer project"
+      description=`Lets get started by finding a brewery...`
+    />
+  </Section>
+</BaseLayout>
