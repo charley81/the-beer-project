@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
 import { signIn, signUp } from '@/lib/auth-client'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
@@ -16,54 +16,29 @@ import {
 
 export function AuthForm() {
   const [mode, setMode] = useState<'login' | 'signup'>('login')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [state, formAction, isPending] = useActionState(
+    async (_prevState: any, formData: FormData) => {
+      const email = formData.get('email') as string
+      const password = formData.get('email') as string
+      const name = formData.get('name') as string
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
+      try {
+        if (mode === 'signup') {
+          const { error } = await signUp.email({ email, password, name })
+          if (error) return { error: error.message }
+        } else {
+          const { error } = await signIn.email({ email, password })
+          if (error) return { error: error.message }
+        }
 
-    try {
-      if (mode === 'signup') {
-        const { error } = await signUp.email(
-          {
-            email,
-            password,
-            name,
-            callbackURL: '/',
-          },
-          {
-            onSuccess: () => {
-              window.location.href = '/'
-            },
-          },
-        )
-        if (error) setError(error.message || 'Signup Failed')
-      } else {
-        const { error } = await signIn.email(
-          {
-            email,
-            password,
-            callbackURL: '/',
-          },
-          {
-            onSuccess: () => {
-              window.location.href = '/'
-            },
-          },
-        )
-        if (error) setError(error.message || 'Login Failed')
+        window.location.href = '/'
+        return { error: null }
+      } catch (err) {
+        return { error: 'An unexpected error ocured' }
       }
-    } catch (err) {
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
-    }
-  }
+    },
+    { error: null },
+  )
 
   return (
     <Card className="w-full max-w-lg mx-auto">
@@ -75,46 +50,39 @@ export function AuthForm() {
             : 'Enter your details to create a new account'}
         </CardDescription>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
+      <form action={formAction}>
         <CardContent className="space-y-4">
           {mode === 'signup' && (
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="John Doe"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+              <Input id="name" name="name" placeholder="John Doe" required />
             </div>
           )}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
               type="email"
               placeholder="jdoe@example.com"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <Input id="password" name="password" type="password" required />
           </div>
-          {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
+          {state?.error && (
+            <p className="text-sm tex-red-500 font-medium">{state.error}</p>
+          )}
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Processing...' : mode === 'login' ? 'login' : 'Sign Up'}
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending
+              ? 'Processing...'
+              : mode === 'login'
+                ? 'Login'
+                : 'Sign Up'}
           </Button>
           <Button
             type="button"
