@@ -51,11 +51,17 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
 
-## Recent Progress (Auth Setup)
+## Recent Progress (Auth & Architecture)
 
-- [x] Configured Better-Auth with Astro DB (LibSQL/Turso) and Drizzle adapter.
-- [x] Created `src/lib/auth.ts` (server-side) and `src/lib/auth-client.ts` (client-side).
-- [x] Implemented catch-all API route at `src/pages/api/auth/[...auth].ts`.
-- [x] Built React `AuthForm` component for Sign Up and Login.
-- [x] Implemented client-side `UserMenu` in `main-nav.astro` to support authentication state on static pages.
+- [x] Refactored `AuthForm` to use **React 19** `useActionState` and `FormData` for modern, cleaner state management.
+- [x] Implemented type-safe environment variable validation using **Zod 4** functional utilities (`z.prettifyError`).
+- [x] Centralized Brewery API logic into `src/lib/api/brewery.ts` with full TypeScript support.
+- [x] Built server-side rendered `BreweryList.astro` component and integrated it into the Home Page.
 - [x] Successfully verified full authentication lifecycle.
+
+## Current Status / Next Steps
+
+- [ ] **Bug Fixing:** Investigate and resolve current runtime/logic bugs.
+- [ ] **SEO Scaling:** Implement a dedicated `SEO.astro` component for better metadata management.
+- [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro`.
+- [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites.
