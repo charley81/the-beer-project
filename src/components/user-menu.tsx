@@ -2,8 +2,14 @@
 
 import { authClient, signOut } from '../lib/auth-client'
 
-export function UserMenu() {
-  const { data: session, isPending } = authClient.useSession()
+interface UserMenuProps {
+  initialSession?: any
+}
+
+export function UserMenu({ initialSession }: { initialSession: any }) {
+  const { data: sessionData, isPending } = authClient.useSession()
+
+  const session = sessionData || initialSession
 
   const handleLogout = async () => {
     await signOut({
@@ -16,7 +22,7 @@ export function UserMenu() {
   }
 
   // While loading the session cookie, show nothing (to avoid flicker)
-  if (isPending)
+  if (isPending && typeof initialSession === 'undefined')
     return (
       <div
         className="w-24 h-8 bg-yellow-400

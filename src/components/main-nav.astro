@@ -1,9 +1,14 @@
 ---
 import { UserMenu } from './user-menu'
+import { auth } from '../lib/auth'
+
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+})
 ---
 
 <nav class="p-8 bg-yellow-500 text-yellow-950 font-bold w-full">
-  <div class="flex max-w-(--width-max-lg) mx-auto justify-between">
+  <div class="flex max-w-(--width-max-lg) mx-auto justify-between items-center">
     <a href="/">
       <h3 class="text-3xl">The Beer Project</h3>
     </a>
@@ -14,6 +19,8 @@ import { UserMenu } from './user-menu'
       <a href="/blog">blog</a>
       <a href="/store">store</a>
     </ul>
-    <UserMenu client:load />
+    <div class="flex justify-end w-48">
+      <UserMenu client:load initialSession={session} />
+    </div>
   </div>
 </nav>
