@@ -5,7 +5,7 @@ const envSchema = z.object({
     .string()
     .default(
       import.meta.env.PROD
-        ? 'https://www.thebeerproject.netlify.app'
+        ? 'https://thebeerproject.netlify.app/'
         : 'http://localhost:4321',
     ),
 })
