@@ -66,11 +66,18 @@ export function AuthForm() {
               type="email"
               placeholder="jdoe@example.com"
               required
+              autoComplete="off"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" type="password" required />
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              required
+              autoComplete="new-password"
+            />
           </div>
           {state?.error && (
             <p className="text-sm tex-red-500 font-medium">{state.error}</p>
