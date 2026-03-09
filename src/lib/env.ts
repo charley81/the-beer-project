@@ -1,13 +1,7 @@
 import { z } from 'zod'
 
 const envSchema = z.object({
-  BETTER_AUTH_URL: z
-    .string()
-    .default(
-      import.meta.env.PROD
-        ? 'https://thebeerproject.netlify.app/'
-        : 'http://localhost:4321',
-    ),
+  BETTER_AUTH_URL: z.string().url().default('http://localhost:4321'),
 })
 
 const _env = envSchema.safeParse(import.meta.env)
