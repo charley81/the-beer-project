@@ -54,14 +54,17 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 ## Recent Progress (Auth & Architecture)
 
 - [x] Refactored `AuthForm` to use **React 19** `useActionState` and `FormData` for modern, cleaner state management.
-- [x] Implemented type-safe environment variable validation using **Zod 4** functional utilities (`z.prettifyError`).
-- [x] Centralized Brewery API logic into `src/lib/api/brewery.ts` with full TypeScript support.
-- [x] Built server-side rendered `BreweryList.astro` component and integrated it into the Home Page.
-- [x] Successfully verified full authentication lifecycle.
+- [x] Implemented type-safe environment variable validation using **Zod 4** functional utilities.
+- [x] Centralized Brewery API logic into `src/lib/api/brewery.ts`.
+- [x] **Navigation Stability:** Fixed header layout jumping by stabilizing the `UserMenu` width and passing the server session from Astro to React to eliminate the "loading flash."
+- [x] **Production Auth Fixes:** Resolved "Invalid Origin" errors and Netlify build failures by correctly configuring `baseURL`, `trustedOrigins`, and removing hardcoded secrets from `env.ts`.
+- [x] **Auth Form UX:** Implemented a reusable `Alert` component for error feedback and added animated loading spinners to the submit buttons.
+- [x] Successfully verified full authentication lifecycle in both local and production environments.
 
 ## Current Status / Next Steps
 
-- [ ] **Bug Fixing:** Investigate and resolve current runtime/logic bugs.
+- [ ] **UX Improvement #3:** Implement Password Visibility Toggle (Show/Hide) in `AuthForm`.
+- [ ] **UX Improvement #4:** Add a "Success/Redirecting" state to the auth lifecycle.
 - [ ] **SEO Scaling:** Implement a dedicated `SEO.astro` component for better metadata management.
 - [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro`.
-- [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites.
+- [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites using Astro DB.
