@@ -1,7 +1,9 @@
 'use client'
 
 import { useActionState, useState } from 'react'
+import { AlertDescription, Alert } from '../ui/alert'
 import { signIn, signUp } from '@/lib/auth-client'
+import { AlertCircle, Loader2 } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
@@ -19,7 +21,7 @@ export function AuthForm() {
   const [state, formAction, isPending] = useActionState(
     async (_prevState: any, formData: FormData) => {
       const email = formData.get('email') as string
-      const password = formData.get('email') as string
+      const password = formData.get('password') as string
       const name = formData.get('name') as string
 
       try {
@@ -34,7 +36,7 @@ export function AuthForm() {
         window.location.href = '/'
         return { error: null }
       } catch (err) {
-        return { error: 'An unexpected error ocured' }
+        return { error: 'An unexpected error occurred' }
       }
     },
     { error: null },
@@ -46,11 +48,11 @@ export function AuthForm() {
         <CardTitle>{mode === 'login' ? 'Login' : 'Create Account'}</CardTitle>
         <CardDescription>
           {mode === 'login'
-            ? 'Enter your email to sing in to your account'
+            ? 'Enter your email to sign in to your account'
             : 'Enter your details to create a new account'}
         </CardDescription>
       </CardHeader>
-      <form action={formAction}>
+      <form action={formAction} className="mt-8">
         <CardContent className="space-y-4">
           {mode === 'signup' && (
             <div className="space-y-2">
@@ -79,17 +81,19 @@ export function AuthForm() {
               autoComplete="new-password"
             />
           </div>
-          {state?.error && (
-            <p className="text-sm tex-red-500 font-medium">{state.error}</p>
-          )}
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending
-              ? 'Processing...'
-              : mode === 'login'
-                ? 'Login'
-                : 'Sign Up'}
+          <Button type="submit" className="w-full mt-4" disabled={isPending}>
+            {isPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                {mode === 'login' ? 'Logging in...' : 'Signing up'}
+              </>
+            ) : mode === 'login' ? (
+              'Log in'
+            ) : (
+              'Sign up'
+            )}
           </Button>
           <Button
             type="button"
@@ -101,6 +105,12 @@ export function AuthForm() {
               ? "Don't have an account? Sign up"
               : 'Already have an account? Login'}
           </Button>
+          {state?.error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{state.error}</AlertDescription>
+            </Alert>
+          )}
         </CardFooter>
       </form>
     </Card>
