@@ -40,6 +40,8 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - **Content Collections:** The blog uses the Astro 5 `glob` loader. New blog posts should be added as `.md` files in `src/pages/blog/` and must follow the schema defined in `src/content.config.ts`.
 - **Component Hybridization:** Use `.astro` components for static parts of the page and `.tsx` (React) components for interactive elements (e.g., forms, search filters). Remember to use the `client:load` or `client:visible` directives in Astro files when interactivity is required.
 - **Formatting:** Prettier is used for code formatting (`.prettierrc`).
+- **Learning & Documentation Style:** Code should be heavily commented with "lesson notes" that explain the *why* and *how* of the logic, specifically for React 19 and Astro 5 mechanics.
+- **SSR Safety:** Always wrap browser-specific APIs (like `window` or `document`) in `useEffect` or check `typeof window !== 'undefined'` to prevent build errors in Astro's server-side rendering.
 
 ## Planned Features (Roadmap)
 
@@ -59,12 +61,12 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] **Navigation Stability:** Fixed header layout jumping by stabilizing the `UserMenu` width and passing the server session from Astro to React to eliminate the "loading flash."
 - [x] **Production Auth Fixes:** Resolved "Invalid Origin" errors and Netlify build failures by correctly configuring `baseURL`, `trustedOrigins`, and removing hardcoded secrets from `env.ts`.
 - [x] **Auth Form UX:** Implemented a reusable `Alert` component for error feedback and added animated loading spinners to the submit buttons.
-- [x] Successfully verified full authentication lifecycle in both local and production environments.
+- [x] **Password Visibility Toggle:** Added a show/hide password feature in `AuthForm` using Lucide icons.
+- [x] **Smart Auth Redirects:** Created a custom `useAuthRedirect` hook to centralize "returnTo" logic and fix SSR errors (window not defined) in `AuthForm` and `UserMenu`.
+- [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
 
 ## Current Status / Next Steps
 
-- [ ] **UX Improvement #3:** Implement Password Visibility Toggle (Show/Hide) in `AuthForm`.
-- [ ] **UX Improvement #4:** Add a "Success/Redirecting" state to the auth lifecycle.
 - [ ] **SEO Scaling:** Implement a dedicated `SEO.astro` component for better metadata management.
 - [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro`.
 - [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites using Astro DB.

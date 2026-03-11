@@ -1,6 +1,7 @@
 'use client'
 
 import { authClient, signOut } from '../lib/auth-client'
+import { useAuthRedirect } from '@/hooks/use-auth-redirect'
 
 interface UserMenuProps {
   initialSession?: any
@@ -8,8 +9,10 @@ interface UserMenuProps {
 
 export function UserMenu({ initialSession }: { initialSession: any }) {
   const { data: sessionData, isPending } = authClient.useSession()
-
   const session = sessionData || initialSession
+
+  // remember where user waas and redirect them back after they log in.
+  const { currentPath } = useAuthRedirect()
 
   const handleLogout = async () => {
     await signOut({
@@ -53,7 +56,7 @@ export function UserMenu({ initialSession }: { initialSession: any }) {
 
   return (
     <a
-      href="/auth"
+      href={`/auth?returnTo=${encodeURIComponent(currentPath)}`}
       className="hover:underline border-2 border-yellow-950 px-3 py-1
       rounded-sm uppercase text-sm font-bold"
     >

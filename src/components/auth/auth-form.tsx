@@ -1,9 +1,10 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
+import { useAuthRedirect } from '@/hooks/use-auth-redirect'
 import { AlertDescription, Alert } from '../ui/alert'
 import { signIn, signUp } from '@/lib/auth-client'
-import { AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react'
+import { AlertCircle, Loader2, Eye, EyeOff, CircleCheck } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
@@ -19,6 +20,8 @@ import {
 export function AuthForm() {
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [showPassword, setShowPassword] = useState(false)
+  const { redirectToReturn } = useAuthRedirect()
+
   const [state, formAction, isPending] = useActionState(
     async (_prevState: any, formData: FormData) => {
       const email = formData.get('email') as string
@@ -28,20 +31,29 @@ export function AuthForm() {
       try {
         if (mode === 'signup') {
           const { error } = await signUp.email({ email, password, name })
-          if (error) return { error: error.message }
+          if (error) return { error: error.message, success: false }
         } else {
           const { error } = await signIn.email({ email, password })
-          if (error) return { error: error.message }
+          if (error) return { error: error.message, success: false }
         }
 
-        window.location.href = '/'
-        return { error: null }
+        return { error: null, success: true }
       } catch (err) {
-        return { error: 'An unexpected error occurred' }
+        return { error: 'An unexpected error occurred', success: false }
       }
     },
-    { error: null },
+    { error: null, success: false },
   )
+
+  useEffect(() => {
+    if (state?.success) {
+      const timer = setTimeout(() => {
+        redirectToReturn()
+      }, 2000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [state?.success, redirectToReturn])
 
   return (
     <Card className="w-full max-w-lg mx-auto">
@@ -125,10 +137,19 @@ export function AuthForm() {
               ? "Don't have an account? Sign up"
               : 'Already have an account? Login'}
           </Button>
-          {state?.error && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{state.error}</AlertDescription>
+          {(state?.error || state?.success) && (
+            <Alert variant={state?.success ? 'success' : 'destructive'}>
+              {state?.success ? (
+                <CircleCheck className="h-4 w-4" />
+              ) : (
+                <AlertCircle className="h-4 w-4" />
+              )}
+              <AlertDescription>
+                {state?.success
+                  ? `${mode === 'login' ? 'Logged in' : 'Account created'}
+      successfully! Redirecting...`
+                  : state?.error}
+              </AlertDescription>
             </Alert>
           )}
         </CardFooter>
