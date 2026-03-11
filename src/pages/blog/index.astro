@@ -2,19 +2,25 @@
 import PageHeader from '@/components/page-header.astro'
 import BaseLayout from '@/layouts/base-layout.astro'
 import { getCollection } from 'astro:content'
+import Section from '@/components/base/section.astro'
 
 const posts = await getCollection('blog')
 ---
 
 <BaseLayout>
-  <PageHeader heading="blog" description="check out this blog about beer..." />
-  <ul class="grid gap-4 mt-20">
-    {
-      posts.map((post) => (
-        <li class="font-bold text-xl underline">
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+  <Section>
+    <PageHeader
+      heading="Blog"
+      description="check out this blog about beer..."
+    />
+    <ul class="grid gap-4 mt-20">
+      {
+        posts.map((post) => (
+          <li class="font-bold text-xl underline">
+            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
 </BaseLayout>

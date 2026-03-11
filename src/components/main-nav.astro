@@ -13,11 +13,11 @@ const session = await auth.api.getSession({
       <h3 class="text-3xl">The Beer Project</h3>
     </a>
     <ul class="flex gap-4">
-      <a href="/">home</a>
-      <a href="/about">about</a>
-      <a href="/contact">contact</a>
-      <a href="/blog">blog</a>
-      <a href="/store">store</a>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/store">Store</a>
+      <a href="/contact">Contact</a>
     </ul>
     <div class="flex justify-end w-48">
       <UserMenu client:load initialSession={session} />
