@@ -67,6 +67,9 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 
 ## Current Status / Next Steps
 
-- [ ] **SEO Scaling:** Implement a dedicated `SEO.astro` component for better metadata management.
-- [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro`.
+- [ ] **SEO & Metadata Scaling:** Update `BaseLayout.astro` to handle dynamic descriptions and metadata with safe defaults.
+- [ ] **Layout Architecture:** Refactor `BaseLayout.astro` to remove the forced `Section` wrapper, allowing for full-width page designs.
+- [ ] **Navigation UX:** Implement active link highlighting in `MainNav.astro` using `Astro.url.pathname`.
+- [ ] **Type Safety:** Add TypeScript `Props` interfaces to all `.astro` components.
+- [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro` (Double-check final references).
 - [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites using Astro DB.

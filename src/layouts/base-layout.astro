@@ -3,25 +3,72 @@ import MainNav from '../components/main-nav.astro'
 import Section from '@/components/base/section.astro'
 import '../styles/global.css'
 
-const { title } = Astro.props
+interface Props {
+  title: string
+  description?: string
+  image?: string
+}
+
+const {
+  title,
+  description = 'A personal beer project by Christopher Harley',
+  image = '/favicon.svg',
+} = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 ---
 
 <html lang="en">
   <head>
+    <!-- LESSON: Global Metadata -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- LESSON: 'Astro.generator' identifies the version of Astro used to build the site. -->
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical URL (Important for SEO) -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- LESSON: Dynamic Page Titles. We interpolate the 'title' prop and append the site name. -->
+    <title>{title} | The Beer Project</title>
+    <meta name="title" content={`${title} | The Beer Project`} />
+    <meta name="description" content={description} />
+
+    <!-- LESSON: Open Graph (OG) / Facebook.
+             These tags control how your site looks when shared on Facebook,
+             Slack, or LinkedIn. Note how we use 'new URL()' to turn the
+             relative image path into an absolute one. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+
+    <!-- LESSON: Twitter Cards. Similar to OG, but specifically for X/Twitter previews. -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+    <!-- RSS Feed Discovery -->
     <link
       rel="alternate"
       type="application/rss+xml"
       title="The Beer Project RSS Feed"
       href={`${Astro.site}rss.xml`}
     />
-    <title>{title}</title>
   </head>
-  <body>
+
+  <body
+    class="bg-yellow-50 text-yellow-950 antialiased min-h-screen flex flex-col"
+  >
     <MainNav />
-    <Section>
+
+    <main class="grow">
       <slot />
-    </Section>
+    </main>
   </body>
 </html>
