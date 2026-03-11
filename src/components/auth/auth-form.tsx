@@ -56,7 +56,7 @@ export function AuthForm() {
   }, [state?.success, redirectToReturn])
 
   return (
-    <Card className="w-full max-w-lg mx-auto">
+    <Card className="w-full max-w-lg mx-auto bg-yellow-50">
       <CardHeader>
         <CardTitle>{mode === 'login' ? 'Login' : 'Create Account'}</CardTitle>
         <CardDescription>
