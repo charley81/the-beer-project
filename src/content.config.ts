@@ -3,8 +3,8 @@ import { glob } from 'astro/loaders'
 
 export const imageSchema = ({ image }: SchemaContext) =>
   z.object({
-    image: image(),
-    description: z.string().optional(),
+    src: image(),
+    alt: z.string(),
   })
 
 const blog = defineCollection({
