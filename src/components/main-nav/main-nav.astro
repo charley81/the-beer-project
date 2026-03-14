@@ -1,0 +1,21 @@
+---
+import { NavMenu } from './nav-menu'
+import { auth } from '../../lib/auth'
+
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+})
+
+const pathname = Astro.url.pathname
+---
+
+<nav class="px-4 py-8 bg-nav text-nav-fg font-bold w-full">
+  <div class="flex max-w-(--width-max-lg) mx-auto justify-between items-center">
+    <a href="/" class="hover:opacity-80 transition-opacity">
+      <h3 class="text-3xl">
+        The <span class="text-primary">Beer</span> Project
+      </h3>
+    </a>
+    <NavMenu client:load session={session} pathname={pathname} />
+  </div>
+</nav>

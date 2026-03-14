@@ -53,23 +53,24 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
 
-## Recent Progress (Auth & Architecture)
+## Recent Progress (Theming & Navigation)
 
-- [x] Refactored `AuthForm` to use **React 19** `useActionState` and `FormData` for modern, cleaner state management.
-- [x] Implemented type-safe environment variable validation using **Zod 4** functional utilities.
-- [x] Centralized Brewery API logic into `src/lib/api/brewery.ts`.
-- [x] **Navigation Stability:** Fixed header layout jumping by stabilizing the `UserMenu` width and passing the server session from Astro to React to eliminate the "loading flash."
-- [x] **Production Auth Fixes:** Resolved "Invalid Origin" errors and Netlify build failures by correctly configuring `baseURL`, `trustedOrigins`, and removing hardcoded secrets from `env.ts`.
-- [x] **Auth Form UX:** Implemented a reusable `Alert` component for error feedback and added animated loading spinners to the submit buttons.
-- [x] **Password Visibility Toggle:** Added a show/hide password feature in `AuthForm` using Lucide icons.
-- [x] **Smart Auth Redirects:** Created a custom `useAuthRedirect` hook to centralize "returnTo" logic and fix SSR errors (window not defined) in `AuthForm` and `UserMenu`.
+- [x] **Semantic Theming:** Migrated from hardcoded color classes to shadcn-style OKLCH theme variables in `global.css`.
+- [x] **Dark Mode Implementation:** Added an inline script in `BaseLayout.astro` for flash-protection and implemented a `ModeToggle` component.
+- [x] **Responsive Navigation:** Built a high-performance, accessible responsive nav using shadcn `Sheet`.
+- [x] **Architectural Refactor:**
+    - [x] Centralized nav links in `src/lib/navigation.ts`.
+    - [x] Created `UserAuth.tsx` to isolate authentication UI logic.
+    - [x] Refactored `NavMenu.tsx` into a lean coordinator component.
+    - [x] Optimized active states by passing server-side `pathname` from Astro to React.
 - [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
 
 ## Current Status / Next Steps
 
-- [ ] **SEO & Metadata Scaling:** Update `BaseLayout.astro` to handle dynamic descriptions and metadata with safe defaults.
-- [ ] **Layout Architecture:** Refactor `BaseLayout.astro` to remove the forced `Section` wrapper, allowing for full-width page designs.
-- [ ] **Navigation UX:** Implement active link highlighting in `MainNav.astro` using `Astro.url.pathname`.
-- [ ] **Type Safety:** Add TypeScript `Props` interfaces to all `.astro` components.
-- [ ] **Auth Cleanup:** Complete the consolidation of auth pages and remove `src/pages/signup.astro` (Double-check final references).
-- [ ] **Favorites Feature:** Start building the CRUD functionality for brewery favorites using Astro DB.
+- [ ] **SEO & Metadata Scaling:** Continue adding TypeScript `Props` interfaces to remaining `.astro` components.
+- [ ] **Hero & Brewery Search (New Feature):**
+    - [ ] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
+    - [ ] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.jpg` and absolute `MainNav`.
+    - [ ] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
+    - [ ] **Step 4:** Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
+- [ ] **Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB (Schema designed).
