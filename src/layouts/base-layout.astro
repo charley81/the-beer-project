@@ -1,5 +1,5 @@
 ---
-import MainNav from '../components/main-nav.astro'
+import MainNav from '../components/main-nav/main-nav.astro'
 import Section from '@/components/base/section.astro'
 import '../styles/global.css'
 
@@ -63,7 +63,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   </head>
 
   <body
-    class="bg-yellow-50 text-yellow-950 antialiased min-h-screen flex flex-col"
+    class="bg-background text-foreground antialiased min-h-screen flex flex-col"
   >
     <MainNav />
 
