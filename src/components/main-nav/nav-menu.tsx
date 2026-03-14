@@ -77,7 +77,7 @@ export function NavMenu({
               </SheetTitle>
             </SheetHeader>
 
-            <nav className="flex flex-col h-full justify-between pb-12">
+            <nav className="flex flex-col h-full justify-between pb-12 px-4">
               <div className="flex flex-col gap-8">
                 <NavLinks mobile />
               </div>
