@@ -27,9 +27,9 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Custom Navigation Tokens */
-  --color-nav: oklch(0.129 0.042 264.695);
-  --color-nav-fg: oklch(0.984 0.003 247.858);
+  /* Custom Navigation Tokens (Aligned with Theme Charcoal) */
+  --color-nav: oklch(0.141 0.005 285.823);
+  --color-nav-fg: oklch(0.985 0 0);
 }
 
 :root {

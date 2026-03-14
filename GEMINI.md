@@ -33,15 +33,20 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 | `pnpm preview`   | Preview the production build locally.                   |
 | `pnpm astro ...` | Run Astro CLI commands directly.                        |
 
-## Development Conventions
+## Development Conventions & Pedagogical Style
 
+- **Teacher/Student Dynamic:** Gemini acts as a senior engineer/mentor. Gemini provides architectural guidance, code snippets, and explanations, but **does not modify files** unless specifically requested (Directives). The user performs the implementation to reinforce learning.
+- **Senior Developer Standards:** All recommendations must favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer).
+- **Core Principles:** 
+    - **Separation of Concerns:** Isolate logic into hooks, UI into primitives, and layouts into coordinators.
+    - **D.R.Y. (Don't Repeat Yourself):** Abstract repetitive logic and styles into reusable utilities or components.
 - **TypeScript:** The project is configured with TypeScript (`tsconfig.json`). Ensure type safety for all new components.
-- **Tailwind 4:** Use modern Tailwind 4 patterns. Styles are mostly handled via `@apply` in `global.css` or utility classes in components.
-- **Content Collections:** The blog uses the Astro 5 `glob` loader. New blog posts should be added as `.md` files in `src/pages/blog/` and must follow the schema defined in `src/content.config.ts`.
-- **Component Hybridization:** Use `.astro` components for static parts of the page and `.tsx` (React) components for interactive elements (e.g., forms, search filters). Remember to use the `client:load` or `client:visible` directives in Astro files when interactivity is required.
-- **Formatting:** Prettier is used for code formatting (`.prettierrc`).
-- **Learning & Documentation Style:** Code should be heavily commented with "lesson notes" that explain the *why* and *how* of the logic, specifically for React 19 and Astro 5 mechanics.
-- **SSR Safety:** Always wrap browser-specific APIs (like `window` or `document`) in `useEffect` or check `typeof window !== 'undefined'` to prevent build errors in Astro's server-side rendering.
+- **Tailwind 4:** Use modern Tailwind 4 patterns. Styles are mostly handled via `@theme` variables or utility classes.
+- **Content Collections:** The blog uses the Astro 5 `glob` loader. New blog posts should follow the schema in `src/content.config.ts`.
+- **Component Hybridization:** Use `.astro` components for static parts and `.tsx` (React) for interactive elements.
+- **Formatting:** Prettier is used for code formatting.
+- **Learning & Documentation Style:** Code should be heavily commented with "lesson notes" explaining the *why* and *how*.
+- **SSR Safety:** Wrap browser-specific APIs in `useEffect` or check `typeof window !== 'undefined'`.
 
 ## Planned Features (Roadmap)
 
