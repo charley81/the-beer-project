@@ -2,6 +2,11 @@
 import { NavMenu } from './nav-menu'
 import { auth } from '../../lib/auth'
 
+interface Props {
+  transparent?: boolean
+}
+
+const { transparent = false } = Astro.props
 const session = await auth.api.getSession({
   headers: Astro.request.headers,
 })
@@ -9,7 +14,13 @@ const session = await auth.api.getSession({
 const pathname = Astro.url.pathname
 ---
 
-<nav class="px-4 py-8 bg-nav text-nav-fg font-bold w-full">
+<nav
+  class={`px-4 py-8 w-full transition-all duration-300 z-50 ${
+    transparent
+      ? 'absolute top-0 left-0 bg-nav/5 backdrop-blur-xl border-b border-white/10 text-white'
+      : 'bg-nav text-nav-fg shadow-lg'
+  }`}
+>
   <div class="flex max-w-(--width-max-lg) mx-auto justify-between items-center">
     <a href="/" class="hover:opacity-80 transition-opacity">
       <h3 class="text-3xl">

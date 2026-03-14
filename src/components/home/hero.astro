@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets'
+import heroImage from '../../images/hero.png'
+import { Button } from '../ui/button'
+---
+
+<section
+  class="relative h-screen w-full flex items-center justify-center overflow-hidden"
+>
+  <Image
+    src={heroImage}
+    alt="Beer being poured at bar"
+    class="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+    loading="eager"
+  />
+
+  <div class="absolute inset-0 bg-nav/40 z-10" aria-hidden="true"></div>
+
+  <div class="relative z-20 max-w-6xl">
+    <div class="space-y-6">
+      <h1 class="text-6xl font-black text-nav-fg italic uppercase">
+        Find your next favorite pour
+      </h1>
+      <p class="text-muted-foreground">
+        Explore thousands of local breweries across the globe, dive into the
+        craft of brewing with our blog, and gear up with professional-grade
+        supplies from our curated store
+      </p>
+      <Button>Start Your Search</Button>
+    </div>
+  </div>
+</section>
