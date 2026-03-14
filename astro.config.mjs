@@ -21,12 +21,8 @@ export default defineConfig({
       provider: fontProviders.google(),
       name: 'Fredoka',
       cssVariable: '--font-fredoka',
-      src: [
-        {
-          weights: ['300', '400', '500', '600', '700'],
-          style: 'normal',
-        },
-      ],
+      weights: ['300', '400', '500', '600', '700'],
+      styles: ['normal'],
     },
   ],
 })
