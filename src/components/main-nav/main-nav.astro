@@ -16,6 +16,11 @@ const pathname = Astro.url.pathname
         The <span class="text-primary">Beer</span> Project
       </h3>
     </a>
-    <NavMenu client:load session={session} pathname={pathname} />
+    <NavMenu
+      client:load
+      session={session}
+      pathname={pathname}
+      transition:persist
+    />
   </div>
 </nav>

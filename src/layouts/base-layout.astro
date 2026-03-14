@@ -1,6 +1,6 @@
 ---
 import MainNav from '../components/main-nav/main-nav.astro'
-import Section from '@/components/base/section.astro'
+import { ClientRouter } from 'astro:transitions'
 import '../styles/global.css'
 
 interface Props {
@@ -60,6 +60,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       title="The Beer Project RSS Feed"
       href={`${Astro.site}rss.xml`}
     />
+
+    <ClientRouter />
   </head>
 
   <body
