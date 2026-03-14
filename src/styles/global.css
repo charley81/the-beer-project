@@ -3,6 +3,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  --font-sans: var(--font-fredoka), ui-sans-serif, system-ui, sans-serif;
   --width-max-sm: 400px;
   --width-max-md: 800px;
   --width-max-lg: 1400px;
