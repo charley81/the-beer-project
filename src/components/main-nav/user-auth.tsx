@@ -10,7 +10,7 @@ interface UserAuthProps {
 }
 
 export function UserAuth({ session, mobile = false }: UserAuthProps) {
-  const { data: sessionData } = authClient.useSession()
+  const { data: sessionData, isPending } = authClient.useSession()
 
   const currentUser = sessionData?.user || session?.user
 
@@ -24,6 +24,10 @@ export function UserAuth({ session, mobile = false }: UserAuthProps) {
         },
       },
     })
+  }
+
+  if (isPending && !currentUser) {
+    return <div className={mobile ? 'h-12' : 'w-16 h-8'} />
   }
 
   if (currentUser) {
