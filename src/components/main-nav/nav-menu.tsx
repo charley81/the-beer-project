@@ -37,7 +37,7 @@ export function NavMenu({
           <a
             href={link.href}
             onClick={() => setIsOpen(false)}
-            className={`transition-colors font-bold ${
+            className={`transition-colors  ${
               isActive(link.href)
                 ? 'text-primary underline decoration-2 underline-offset-4'
                 : 'hover:text-primary text-nav-fg'

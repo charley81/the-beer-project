@@ -13,7 +13,7 @@ const posts = await getCollection('blog')
       heading="Blog"
       description="check out this blog about beer..."
     />
-    <ul class="grid gap-4 mt-20">
+    <ul class="grid gap-y-8 mt-20">
       {
         posts.map((post) => (
           <li class="font-bold text-xl underline">

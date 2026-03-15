@@ -17,13 +17,13 @@ const pathname = Astro.url.pathname
 <nav
   class={`px-4 py-8 w-full transition-all duration-300 z-50 ${
     transparent
-      ? 'absolute top-0 left-0 bg-nav/5 backdrop-blur-xl border-b border-white/10 text-white'
+      ? 'absolute top-0 left-0 bg-linear-to-b from-nav/95 via-nav/60 to-transparent backdrop-blur-md text-nav-fg'
       : 'bg-nav text-nav-fg shadow-lg'
   }`}
 >
   <div class="flex max-w-(--width-max-lg) mx-auto justify-between items-center">
     <a href="/" class="hover:opacity-80 transition-opacity">
-      <h3 class="text-3xl">
+      <h3 class="text-3xl font-black">
         The <span class="text-primary">Beer</span> Project
       </h3>
     </a>
