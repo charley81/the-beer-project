@@ -58,7 +58,7 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
 
-## Recent Progress (Theming & Navigation)
+## Recent Progress (Theming, Navigation & Hero)
 
 - [x] **Semantic Theming:** Migrated from hardcoded color classes to shadcn-style OKLCH theme variables in `global.css`.
 - [x] **Dark Mode Implementation:** Added an inline script in `BaseLayout.astro` for flash-protection and implemented a `ModeToggle` component.
@@ -69,13 +69,20 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
     - [x] Refactored `NavMenu.tsx` into a lean coordinator component.
     - [x] Optimized active states by passing server-side `pathname` from Astro to React.
 - [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
+- [x] **Astro 6 Font API:** Implemented "Fredoka" Google Font using the new built-in Font API (`fontProviders.google()`) and the `<Font />` component for zero-layout-shift and self-hosting.
+- [x] **Client Router (View Transitions):** Enabled `<ClientRouter />` and `transition:persist` on `NavMenu` to prevent auth-state flickering and provide an "App-like" navigation experience.
+- [x] **Full-Screen Hero Prototype:**
+    - [x] Created `Hero.astro` with full-bleed `hero.png`.
+    - [x] Implemented a semi-transparent "Glassmorphism" effect for `MainNav`.
+    - [x] Added `transparentNav` mode to `BaseLayout` for viewport locking (`h-screen overflow-hidden`).
 
 ## Current Status / Next Steps
 
 - [ ] **SEO & Metadata Scaling:** Continue adding TypeScript `Props` interfaces to remaining `.astro` components.
-- [ ] **Hero & Brewery Search (New Feature):**
-    - [ ] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
-    - [ ] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.jpg` and absolute `MainNav`.
+- [ ] **Hero & Brewery Search (Refining & Logic):**
+    - [x] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
+    - [x] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.png` and absolute/glass `MainNav`.
+    - [ ] **Step 2.5 (Next Up):** Refine Hero typography and layout styling for maximum impact.
     - [ ] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
     - [ ] **Step 4:** Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
 - [ ] **Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB (Schema designed).

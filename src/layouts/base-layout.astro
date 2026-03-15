@@ -8,12 +8,14 @@ interface Props {
   title: string
   description?: string
   image?: string
+  transparentNav?: boolean
 }
 
 const {
   title,
   description = 'A personal beer project by Christopher Harley',
   image = '/favicon.svg',
+  transparentNav = false,
 } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
@@ -68,11 +70,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   </head>
 
   <body
-    class="bg-background text-foreground antialiased min-h-screen flex flex-col font-sans tracking-wide"
+    class={`bg-background text-foreground antialiased font-sans tracking-wide ${
+      transparentNav ? 'h-screen overflow-hidden' : 'min-h-screen flex flex-col'
+    }`}
   >
-    <MainNav />
+    <MainNav transparent={transparentNav} />
 
-    <main class="grow">
+    <main class={transparentNav ? 'h-full w-full' : 'grow'}>
       <slot />
     </main>
   </body>
