@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import heroImage from '../../images/hero.png'
-import { Button } from '../ui/button'
+import { Button, buttonVariants } from '../ui/button'
 ---
 
 <section class="relative h-screen w-full flex items-center overflow-hidden">
@@ -29,9 +29,15 @@ import { Button } from '../ui/button'
       </p>
 
       <div class="flex gap-4 pt-4">
-        <Button size="lg" className="font-bold cursor-pointer">
+        <a
+          href="/search"
+          class={buttonVariants({
+            size: 'lg',
+            className: 'font-bold cursor-pointer',
+          })}
+        >
           Start Your Search
-        </Button>
+        </a>
       </div>
     </div>
   </div>

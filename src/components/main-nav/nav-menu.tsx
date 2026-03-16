@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '../ui/sheet'
+import { Button } from '../ui/button'
 
 export function NavMenu({
   session: initialSession,
@@ -61,10 +62,14 @@ export function NavMenu({
       <div className="lg:hidden">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <button className="p-2 text-nav-fg hover:text-primary transition-colors cursor-pointer">
+            <Button
+              className="p-2 text-nav-fg hover:text-primary transition-colors cursor-pointer"
+              variant="ghost"
+              size="icon"
+            >
               <Menu size={32} />
               <span className="sr-only">Open Menu</span>
-            </button>
+            </Button>
           </SheetTrigger>
 
           <SheetContent
