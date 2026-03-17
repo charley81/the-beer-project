@@ -2,10 +2,19 @@
 import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
+import { BrewerySearch } from '@/components/brewery/brewery-search'
 ---
 
-<BaseLayout title="Contact">
-  <Section>
-    <PageHeader heading="Search" description=`Brewery search coming soon...` />
+<BaseLayout title="Search" fixed>
+  <Section class="flex h-full flex-col overflow-hidden">
+    <div class="flex-none">
+      <PageHeader
+        heading="Search"
+        description="Find your next favorite pour from thousands of local breweries."
+      />
+    </div>
+    <div class="min-h-0 flex-1">
+      <BrewerySearch client:load />
+    </div>
   </Section>
 </BaseLayout>
