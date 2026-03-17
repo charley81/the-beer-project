@@ -7,6 +7,7 @@ import { Button } from '../ui/button'
 import { Skeleton } from '../ui/skeleton'
 import { Search as SearchIcon, MapPin, Beer, Loader2 } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
+import { Card, CardHeader, CardContent, CardFooter } from '../ui/card'
 
 export function BrewerySearch({ initialCity = '' }) {
   const formRef = useRef<HTMLFormElement>(null)
@@ -116,7 +117,10 @@ function SearchSkeletons() {
   return (
     <>
       {Array.from({ length: 6 }).map((_, i) => (
-        <Card key={i} className="flex flex-col h-full overflow-hidden border-dashed opacity-50">
+        <Card
+          key={i}
+          className="flex flex-col h-full overflow-hidden border-dashed opacity-50"
+        >
           <CardHeader className="space-y-3 pb-4">
             <div className="flex items-start justify-between gap-4">
               <Skeleton className="h-6 w-3/4" />
