@@ -71,10 +71,13 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
 - [x] **Astro 6 Font API:** Implemented "Fredoka" Google Font using the new built-in Font API (`fontProviders.google()`) and the `<Font />` component for zero-layout-shift and self-hosting.
 - [x] **Client Router (View Transitions):** Enabled `<ClientRouter />` and `transition:persist` on `NavMenu` to prevent auth-state flickering and provide an "App-like" navigation experience.
-- [x] **Full-Screen Hero Prototype:**
-    - [x] Created `Hero.astro` with full-bleed `hero.png`.
-    - [x] Implemented a semi-transparent "Glassmorphism" effect for `MainNav`.
-    - [x] Added `transparentNav` mode to `BaseLayout` for viewport locking (`h-screen overflow-hidden`).
+- [x] **Full-Screen Hero Refinement:**
+    - [x] Implemented left-aligned Hero content matching `MainNav` container logic.
+    - [x] Applied Fredoka typography and custom `hero-description` utility for maximum impact.
+    - [x] Added `bg-linear-to-b` gradient to `MainNav` for seamless hero integration.
+- [x] **UI System Audit & Refactor:**
+    - [x] Audited interactive components for consistency.
+    - [x] Refactored `UserAuth.tsx` and `NavMenu.tsx` to use shadcn `Button` primitives with `asChild`.
 
 ## Current Status / Next Steps
 
@@ -82,7 +85,8 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [ ] **Hero & Brewery Search (Refining & Logic):**
     - [x] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
     - [x] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.png` and absolute/glass `MainNav`.
-    - [ ] **Step 2.5 (Next Up):** Refine Hero typography and layout styling for maximum impact.
+    - [x] **Step 2.5:** Refine Hero typography and layout styling for maximum impact.
+    - [ ] **Step 2.6 (Next Up):** Polish `UserAuth.tsx` (fix typos/styles) and ensure `Skeleton`/`Badge` primitives are in place.
     - [ ] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
     - [ ] **Step 4:** Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
 - [ ] **Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB (Schema designed).

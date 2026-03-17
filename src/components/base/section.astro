@@ -1,3 +1,7 @@
-<section class="max-w-(--width-max-lg) mt-8 p-4">
+---
+const { class: className } = Astro.props
+---
+
+<section class:list={['mx-auto w-full px-4 pt-12', className]}>
   <slot />
 </section>
