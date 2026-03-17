@@ -36,7 +36,8 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 ## Development Conventions & Pedagogical Style
 
 - **Teacher/Student Dynamic:** Gemini acts as a senior engineer/mentor. Gemini provides architectural guidance, code snippets, and explanations, but **does not modify files** unless specifically requested (Directives). The user performs the implementation to reinforce learning.
-- **Senior Developer Standards:** All recommendations must favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer).
+- **Senior Developer Standards:** All recommendations must favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer). Gemini will research and apply the most logical and modern patterns for every task.
+- **Code Commenting & Documentation:** All code provided by Gemini must be heavily commented with "lesson notes" explaining the *why* and *how* of every line of code to ensure the user understands the underlying logic.
 - **Core Principles:** 
     - **Separation of Concerns:** Isolate logic into hooks, UI into primitives, and layouts into coordinators.
     - **D.R.Y. (Don't Repeat Yourself):** Abstract repetitive logic and styles into reusable utilities or components.
@@ -63,11 +64,6 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] **Semantic Theming:** Migrated from hardcoded color classes to shadcn-style OKLCH theme variables in `global.css`.
 - [x] **Dark Mode Implementation:** Added an inline script in `BaseLayout.astro` for flash-protection and implemented a `ModeToggle` component.
 - [x] **Responsive Navigation:** Built a high-performance, accessible responsive nav using shadcn `Sheet`.
-- [x] **Architectural Refactor:**
-    - [x] Centralized nav links in `src/lib/navigation.ts`.
-    - [x] Created `UserAuth.tsx` to isolate authentication UI logic.
-    - [x] Refactored `NavMenu.tsx` into a lean coordinator component.
-    - [x] Optimized active states by passing server-side `pathname` from Astro to React.
 - [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
 - [x] **Astro 6 Font API:** Implemented "Fredoka" Google Font using the new built-in Font API (`fontProviders.google()`) and the `<Font />` component for zero-layout-shift and self-hosting.
 - [x] **Client Router (View Transitions):** Enabled `<ClientRouter />` and `transition:persist` on `NavMenu` to prevent auth-state flickering and provide an "App-like" navigation experience.
@@ -78,6 +74,12 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] **UI System Audit & Refactor:**
     - [x] Audited interactive components for consistency.
     - [x] Refactored `UserAuth.tsx` and `NavMenu.tsx` to use shadcn `Button` primitives with `asChild`.
+- [x] **Modern Navigation Engine:**
+    - [x] Implemented sticky navigation with scroll-triggered glassmorphism.
+    - [x] Added `data-scrolled` and `data-transparent` logic for high-performance CSS transitions.
+- [x] **App-Like Layout Engine:**
+    - [x] Updated `BaseLayout` with `fixed` viewport-locking support.
+    - [x] Implemented nested, contained scroll areas for the search feature.
 
 ## Current Status / Next Steps
 
@@ -86,7 +88,12 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
     - [x] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
     - [x] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.png` and absolute/glass `MainNav`.
     - [x] **Step 2.5:** Refine Hero typography and layout styling for maximum impact.
-    - [ ] **Step 2.6 (Next Up):** Polish `UserAuth.tsx` (fix typos/styles) and ensure `Skeleton`/`Badge` primitives are in place.
-    - [ ] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
+    - [x] **Step 2.6:** Polish `UserAuth.tsx` (fix typos/styles) and ensure `Skeleton`/`Badge` primitives are in place.
+    - [x] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
+    - [ ] **Step 3.5 (Search Professionalism Audit):**
+        - [ ] Implement URL Query Param persistence for shareable searches.
+        - [ ] Align `SearchSkeletons` with `BreweryCard` layout for zero layout shift.
+        - [ ] Add "Suggested Searches" to the initial empty state.
+        - [ ] Add a "Clear" button and UX polish to the search input.
     - [ ] **Step 4:** Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
 - [ ] **Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB (Schema designed).

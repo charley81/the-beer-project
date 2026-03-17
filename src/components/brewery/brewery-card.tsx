@@ -9,7 +9,7 @@ import {
 } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { buttonVariants } from '../ui/button'
-import { MapPin, Globe, Phone } from 'lucide-react'
+import { MapPin, Globe, Phone, ExternalLink } from 'lucide-react'
 
 interface BreweryCardProps {
   brewery: Brewery
@@ -17,27 +17,36 @@ interface BreweryCardProps {
 
 export function BreweryCard({ brewery }: BreweryCardProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{brewery.name}</CardTitle>
-        <Badge>{brewery.brewery_type.replace('_', ' ')}</Badge>
-        <CardDescription>
-          <MapPin size={14} className="text-muted-foreground" />
+    <Card className="flex flex-col h-full overflow-hidden transition-all hover:shadow-md">
+      <CardHeader className="space-y-3 pb-4">
+        <div className="flex items-start justify-between gap-4">
+          <CardTitle className="text-xl font-bold leading-tight">
+            {brewery.name}
+          </CardTitle>
+          <Badge variant="secondary" className="shrink-0 capitalize">
+            {brewery.brewery_type.replace('_', ' ')}
+          </Badge>
+        </div>
+
+        <CardDescription className="flex items-center gap-1.5 text-sm font-medium">
+          <MapPin size={14} className="text-primary shrink-0" />
           {brewery.city}, {brewery.state_province || brewery.state}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div>
+
+      <CardContent className="flex-grow space-y-4">
+        <div className="text-muted-foreground space-y-0.5 text-sm">
           <p>{brewery.address_1}</p>
           <p>
             {brewery.city}, {brewery.state_province || brewery.state}{' '}
             {brewery.postal_code}
           </p>
         </div>
-        <div>
+
+        <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold">
           {brewery.phone && (
-            <div>
-              <Phone />
+            <div className="flex items-center gap-1.5 text-muted-foreground">
+              <Phone size={14} className="text-primary" />
               <span>{brewery.phone}</span>
             </div>
           )}
@@ -46,16 +55,23 @@ export function BreweryCard({ brewery }: BreweryCardProps) {
               href={brewery.website_url}
               target="_blank"
               rel="noopener noreferrer"
+              className="hover:text-primary flex items-center gap-1.5 transition-colors"
             >
-              <Globe />
+              <Globe size={14} className="text-primary" />
               <span>Website</span>
+              <ExternalLink size={12} className="opacity-50" />
             </a>
           )}
         </div>
       </CardContent>
 
-      <CardFooter>
-        <a href={`/brewery/${brewery.id}`}>View Full Details</a>
+      <CardFooter className="pt-2">
+        <a 
+          href={`/brewery/${brewery.id}`} 
+          className={buttonVariants({ variant: 'outline', className: 'w-full font-bold' })}
+        >
+          View Full Details
+        </a>
       </CardFooter>
     </Card>
   )

@@ -54,18 +54,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   </head>
 
   <body
-    class={`bg-background text-foreground antialiased font-sans tracking-wide min-h-screen flex flex-col ${
-      fixed ? 'h-screen overflow-hidden' : ''
-    }`}
+    class:list={[
+      'bg-background text-foreground antialiased font-sans tracking-wide min-h-screen flex flex-col',
+      (transparentNav || fixed) && 'h-screen overflow-hidden',
+    ]}
   >
     <MainNav transparent={transparentNav} />
 
     <main
-      class={transparentNav
-        ? 'grow h-full w-full'
-        : `mx-auto w-full px-4 grow max-w-(--width-max-md) ${
-            fixed ? 'flex flex-col overflow-hidden' : ''
-          }`}
+      class:list={[
+        'grow flex flex-col w-full min-h-0',
+        !transparentNav && 'mx-auto px-4 max-w-(--width-max-md)',
+        (transparentNav || fixed) && 'overflow-hidden',
+      ]}
     >
       <slot />
     </main>

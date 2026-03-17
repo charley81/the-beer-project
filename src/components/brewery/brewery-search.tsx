@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useActionState } from 'react'
+import { useActionState, useRef, useEffect } from 'react'
 import { actions, isActionError } from 'astro:actions'
 import { BreweryCard } from './brewery-card'
 import { Input } from '../ui/input'
@@ -8,7 +8,9 @@ import { Skeleton } from '../ui/skeleton'
 import { Search as SearchIcon, MapPin, Beer, Loader2 } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 
-export function BrewerySearch() {
+export function BrewerySearch({ initialCity = '' }) {
+  const formRef = useRef<HTMLFormElement>(null)
+
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
       const city = formData.get('city') as string
@@ -20,10 +22,23 @@ export function BrewerySearch() {
         }
       }
 
+      const url = new URL(window.location.href)
+      url.searchParams.set('city', city)
+      window.history.pushState({}, '', url)
+
       return await actions.search(formData)
     },
     null,
   )
+
+  useEffect(() => {
+    if (initialCity && formRef.current) {
+      const formData = new FormData()
+      formData.set('city', initialCity)
+
+      formAction(formData)
+    }
+  }, [])
 
   const results = state?.data || []
   const error = state?.error
@@ -34,13 +49,15 @@ export function BrewerySearch() {
       {/* --- FIXED SEARCH BAR --- */}
       <div className="w-full flex-none">
         <form
+          ref={formRef}
           action={formAction}
           className="bg-card focus-within:ring-primary/20 relative group flex flex-col gap-3 rounded-2xl border p-1 shadow-sm transition-all focus-within:ring-2 sm:flex-row"
         >
-          <div className="relative flex-grow">
+          <div className="relative grow">
             <MapPin className="text-muted-foreground group-focus-within:text-primary absolute left-4 top-1/2 size-5 -translate-y-1/2 transition-colors" />
             <Input
               name="city"
+              defaultValue={initialCity}
               placeholder="Enter a city (e.g. San Diego)..."
               className="h-14 border-none bg-transparent text-lg shadow-none pl-12 focus-visible:ring-0 focus-visible:ring-offset-0"
               disabled={isPending}
@@ -99,15 +116,31 @@ function SearchSkeletons() {
   return (
     <>
       {Array.from({ length: 6 }).map((_, i) => (
-        <div key={i} className="space-y-4 rounded-xl border p-6">
-          <Skeleton className="h-6 w-3/4" />
-          <Skeleton className="h-4 w-1/2" />
-          <div className="space-y-2 py-4">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-full" />
-          </div>
-          <Skeleton className="h-10 w-full" />
-        </div>
+        <Card key={i} className="flex flex-col h-full overflow-hidden border-dashed opacity-50">
+          <CardHeader className="space-y-3 pb-4">
+            <div className="flex items-start justify-between gap-4">
+              <Skeleton className="h-6 w-3/4" />
+              <Skeleton className="h-5 w-20 shrink-0" />
+            </div>
+            <Skeleton className="h-4 w-1/3" />
+          </CardHeader>
+
+          <CardContent className="flex-grow space-y-4">
+            <div className="space-y-2">
+              <Skeleton className="h-3 w-1/2" />
+              <Skeleton className="h-3 w-2/3" />
+            </div>
+
+            <div className="flex gap-4">
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-3 w-24" />
+            </div>
+          </CardContent>
+
+          <CardFooter className="pt-2">
+            <Skeleton className="h-10 w-full rounded-md" />
+          </CardFooter>
+        </Card>
       ))}
     </>
   )
