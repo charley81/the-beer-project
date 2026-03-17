@@ -3,6 +3,8 @@ import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
 import { BrewerySearch } from '@/components/brewery/brewery-search'
+
+const initialCity = Astro.url.searchParams.get('city') || ''
 ---
 
 <BaseLayout title="Search" fixed>
@@ -14,7 +16,7 @@ import { BrewerySearch } from '@/components/brewery/brewery-search'
       />
     </div>
     <div class="min-h-0 flex-1">
-      <BrewerySearch client:load />
+      <BrewerySearch client:load initialCity={initialCity} />
     </div>
   </Section>
 </BaseLayout>
