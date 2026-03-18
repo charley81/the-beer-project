@@ -34,7 +34,7 @@ export function BreweryCard({ brewery }: BreweryCardProps) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-grow space-y-4">
+      <CardContent className="grow space-y-4">
         <div className="text-muted-foreground space-y-0.5 text-sm">
           <p>{brewery.address_1}</p>
           <p>
@@ -66,9 +66,12 @@ export function BreweryCard({ brewery }: BreweryCardProps) {
       </CardContent>
 
       <CardFooter className="pt-2">
-        <a 
-          href={`/brewery/${brewery.id}`} 
-          className={buttonVariants({ variant: 'outline', className: 'w-full font-bold' })}
+        <a
+          href={`/brewery/${brewery.id}`}
+          className={buttonVariants({
+            variant: 'outline',
+            className: 'w-full font-bold',
+          })}
         >
           View Full Details
         </a>
