@@ -8,9 +8,11 @@ import { Skeleton } from '../ui/skeleton'
 import { Search as SearchIcon, MapPin, Beer, Loader2 } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/card'
+import { SearchEmptyState } from './search-empty-state'
 
 export function BrewerySearch({ initialCity = '' }) {
   const formRef = useRef<HTMLFormElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [state, formAction, isPending] = useActionState(
     async (prevState: any, formData: FormData) => {
@@ -31,6 +33,15 @@ export function BrewerySearch({ initialCity = '' }) {
     },
     null,
   )
+
+  const handleQuickSearch = (city: string) => {
+    if (inputRef.current) {
+      inputRef.current.value = city
+      const formData = new FormData()
+      formData.set('city', city)
+      formAction(formData)
+    }
+  }
 
   useEffect(() => {
     if (initialCity && formRef.current) {
@@ -57,6 +68,7 @@ export function BrewerySearch({ initialCity = '' }) {
           <div className="relative grow">
             <MapPin className="text-muted-foreground group-focus-within:text-primary absolute left-4 top-1/2 size-5 -translate-y-1/2 transition-colors" />
             <Input
+              ref={inputRef}
               name="city"
               defaultValue={initialCity}
               placeholder="Enter a city (e.g. San Diego)..."
@@ -86,7 +98,7 @@ export function BrewerySearch({ initialCity = '' }) {
 
       {/* --- SCROLLABLE RESULTS GRID --- */}
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 p-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 px-0 py-10">
           {isPending ? (
             <SearchSkeletons />
           ) : error ? (
@@ -105,7 +117,10 @@ export function BrewerySearch({ initialCity = '' }) {
               <BreweryCard key={brewery.id} brewery={brewery} />
             ))
           ) : (
-            <SearchEmptyState hasSearched={hasSearched} />
+            <SearchEmptyState
+              hasSearched={hasSearched}
+              onSelectCity={handleQuickSearch}
+            />
           )}
         </div>
       </div>
@@ -147,35 +162,5 @@ function SearchSkeletons() {
         </Card>
       ))}
     </>
-  )
-}
-
-function SearchEmptyState({ hasSearched }: { hasSearched: boolean }) {
-  if (hasSearched) {
-    return (
-      <div className="col-span-full py-20 text-center">
-        <Beer className="text-muted-foreground/20 mx-auto mb-4 size-16" />
-        <h3 className="text-xl font-semibold text-foreground">
-          No breweries found
-        </h3>
-        <p className="text-muted-foreground">
-          Try searching for a different city or check your spelling.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="col-span-full py-20 text-center">
-      <div className="bg-primary/10 mx-auto mb-4 flex size-16 items-center justify-center rounded-full">
-        <SearchIcon className="text-primary size-8" />
-      </div>
-      <h3 className="text-xl font-semibold text-foreground">
-        Ready for a pour?
-      </h3>
-      <p className="text-muted-foreground">
-        Enter a city above to find local craft breweries.
-      </p>
-    </div>
   )
 }
