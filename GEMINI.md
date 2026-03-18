@@ -74,26 +74,22 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] **UI System Audit & Refactor:**
     - [x] Audited interactive components for consistency.
     - [x] Refactored `UserAuth.tsx` and `NavMenu.tsx` to use shadcn `Button` primitives with `asChild`.
-- [x] **Modern Navigation Engine:**
+- [x] **Modern Navigation & Layout Engine:**
     - [x] Implemented sticky navigation with scroll-triggered glassmorphism.
-    - [x] Added `data-scrolled` and `data-transparent` logic for high-performance CSS transitions.
-- [x] **App-Like Layout Engine:**
-    - [x] Updated `BaseLayout` with `fixed` viewport-locking support.
-    - [x] Implemented nested, contained scroll areas for the search feature.
+    - [x] Resolved 100vh "mystery scroll" using Flexbox `grow` and `min-h-0` strategy.
+    - [x] Refined `BaseLayout` to support both full-screen Hero sections and centered content pages.
+- [x] **Advanced Search Architecture:**
+    - [x] Implemented React 19 `useActionState` with Astro Actions for type-safe searching.
+    - [x] Added URL Query Param persistence for shareable, refresh-proof searches.
+    - [x] Built interactive "Suggested Search" chips in a decomposed `SearchEmptyState` component.
+    - [x] Achieved Zero Layout Shift (CLS) by aligning `SearchSkeletons` with `BreweryCard` dimensions.
 
 ## Current Status / Next Steps
 
-- [ ] **SEO & Metadata Scaling:** Continue adding TypeScript `Props` interfaces to remaining `.astro` components.
-- [ ] **Hero & Brewery Search (Refining & Logic):**
-    - [x] **Step 1:** Implement "Fredoka" Google Font in `BaseLayout.astro`.
-    - [x] **Step 2:** Build 100vh Hero section in `index.astro` with `hero.png` and absolute/glass `MainNav`.
-    - [x] **Step 2.5:** Refine Hero typography and layout styling for maximum impact.
-    - [x] **Step 2.6:** Polish `UserAuth.tsx` (fix typos/styles) and ensure `Skeleton`/`Badge` primitives are in place.
-    - [x] **Step 3:** Create `BrewerySearch.tsx` (React 19) with city search and results list.
-    - [ ] **Step 3.5 (Search Professionalism Audit):**
-        - [ ] Implement URL Query Param persistence for shareable searches.
-        - [ ] Align `SearchSkeletons` with `BreweryCard` layout for zero layout shift.
-        - [ ] Add "Suggested Searches" to the initial empty state.
-        - [ ] Add a "Clear" button and UX polish to the search input.
-    - [ ] **Step 4:** Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
-- [ ] **Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB (Schema designed).
+- [ ] **Step 3.5 (Finishing Search Audit):**
+    - [ ] Add a "Clear" (X) button to the search input for quick resets.
+    - [ ] Final accessibility check for search interactions.
+- [ ] **Step 4: Brewery Detail Engine:**
+    - [ ] Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
+    - [ ] Implement server-side fetching for individual brewery data.
+- [ ] **Step 5: Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB.
