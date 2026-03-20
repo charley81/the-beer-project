@@ -64,7 +64,8 @@ export function BrewerySearch({ initialCity = '' }) {
   }, [])
 
   const hasQuery = query.trim().length >= 2
-  const results = state?.data || []
+  const results = state?.data?.breweries || []
+  const favoriteIds = state?.data?.favoriteIds || []
   const showResults = hasQuery && results.length > 0
   const error = state?.error
   const hasSearched = state !== null && hasQuery
@@ -142,8 +143,12 @@ export function BrewerySearch({ initialCity = '' }) {
               </Alert>
             </div>
           ) : results.length > 0 ? (
-            results.map((brewery) => (
-              <BreweryCard key={brewery.id} brewery={brewery} />
+            results.map((brewery: any) => (
+              <BreweryCard 
+                key={brewery.id} 
+                brewery={brewery} 
+                isFavorited={favoriteIds.includes(brewery.id)}
+              />
             ))
           ) : (
             <SearchEmptyState

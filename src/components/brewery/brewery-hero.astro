@@ -2,12 +2,14 @@
 import { Badge } from '../ui/badge'
 import { Beer, MapPin } from 'lucide-react'
 import { type Brewery } from '@/lib/api/brewery'
+import { FavoriteButton } from './favorite-button'
 
 interface Props {
   brewery: Brewery
+  isFavorited?: boolean
 }
 
-const { brewery: b } = Astro.props
+const { brewery: b, isFavorited = false } = Astro.props
 
 const GOOGLE_MAPS_API_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY
 
@@ -54,14 +56,23 @@ const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API
   >
     <div class="container mx-auto flex h-full flex-col justify-end pb-24 px-4">
       <div class="max-w-4xl space-y-6">
-        <div class="flex items-center gap-3">
-          <Badge
-            variant="outline"
-            className="bg-primary/20 text-primary-foreground border-primary/30 backdrop-blur-md px-4 py-1.5 text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg"
-          >
-            <Beer className="w-3.5 h-3.5" />
-            {b.brewery_type.replace(/_/g, ' ')}
-          </Badge>
+        <div class="flex items-center justify-between pointer-events-auto">
+          <div class="flex items-center gap-3">
+            <Badge
+              variant="outline"
+              className="bg-primary/20 text-primary-foreground border-primary/30 backdrop-blur-md px-4 py-1.5 text-xs font-bold uppercase tracking-widest flex items-center gap-2 shadow-lg"
+            >
+              <Beer className="w-3.5 h-3.5" />
+              {b.brewery_type.replace(/_/g, ' ')}
+            </Badge>
+          </div>
+          
+          <FavoriteButton 
+            client:load 
+            breweryId={b.id} 
+            initialIsFavorited={isFavorited}
+            className="bg-background/20 backdrop-blur-md border border-white/10 shadow-xl"
+          />
         </div>
 
         <div class="space-y-4">
