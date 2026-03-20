@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useActionState, useRef, useEffect, useState } from 'react'
 import { actions, isActionError } from 'astro:actions'
 import { BreweryCard } from './brewery-card'
@@ -123,7 +122,6 @@ export function BrewerySearch({ initialCity = '' }) {
         </form>
       </div>
 
-      {/* --- SCROLLABLE RESULTS GRID --- */}
       <div
         className="flex-1 overflow-y-auto pr-2 custom-scrollbar"
         aria-live="polite"

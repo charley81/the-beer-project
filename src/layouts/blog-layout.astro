@@ -1,18 +1,87 @@
 ---
 import BaseLayout from './base-layout.astro'
 import { Image } from 'astro:assets'
+import Section from '@/components/base/section.astro'
+import { ArrowLeft, Calendar, User } from 'lucide-react'
 
 const { frontmatter } = Astro.props
+
+// Format date nicely
+const publishDate = new Date(frontmatter.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
 ---
 
 <BaseLayout title={frontmatter.title}>
-  <a href="/blog" class="text-primary underline block mb-4">back to blog.</a>
-  <Image
-    src={frontmatter.featuredImage.src}
-    alt={frontmatter.featuredImage.alt}
-    width={1024}
-    height={576}
-    class="w-full h-auto object-cover rounded-lg mb-4"
-  />
-  <slot />
+  <article class="pb-24">
+    <!-- Header/Hero Section (Border Removed) -->
+    <header class="bg-card py-16 md:py-24">
+      <div class="container mx-auto px-4">
+        <div class="max-w-(--width-max-md) mx-auto space-y-8">
+          <!-- Back Button -->
+          <div class="flex">
+            <a 
+              href="/blog" 
+              class="group flex items-center gap-3 text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
+            >
+              <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-all duration-300 group-hover:bg-transparent group-hover:border-2 group-hover:border-primary group-hover:text-primary">
+                <ArrowLeft
+                  className="w-5 h-5 transition-transform group-hover:-translate-x-1"
+                />
+              </div>
+              <span>Back to Blog</span>
+            </a>
+          </div>
+
+          <div class="space-y-6">
+            <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-foreground leading-[1.1]">
+              {frontmatter.title}
+            </h1>
+
+            <div class="flex flex-wrap items-center gap-6 text-foreground font-semibold">
+              <div class="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-primary" />
+                <time datetime={frontmatter.date}>{publishDate}</time>
+              </div>
+              <div class="flex items-center gap-2">
+                <User className="w-4 h-4 text-primary" />
+                <span>{frontmatter.author}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Image (Border Removed) -->
+    <div class="container mx-auto px-4 -mt-12 md:-mt-16 relative z-10">
+      <div class="max-w-(--width-max-md) mx-auto">
+        <div class="rounded-2xl overflow-hidden shadow-2xl aspect-video">
+          <Image
+            src={frontmatter.featuredImage.src}
+            alt={frontmatter.featuredImage.alt}
+            width={1200}
+            height={675}
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <Section className="pt-16">
+      <!-- Explicitly setting text-foreground to fix the "too light" issue -->
+      <div class="prose prose-lg max-w-none text-foreground
+        prose-headings:text-foreground prose-headings:font-bold prose-headings:tracking-tight 
+        prose-p:text-foreground/90 prose-p:leading-relaxed
+        prose-strong:text-foreground prose-strong:font-bold
+        prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+        prose-img:rounded-xl prose-img:shadow-lg
+        dark:prose-invert">
+        <slot />
+      </div>
+    </Section>
+  </article>
 </BaseLayout>

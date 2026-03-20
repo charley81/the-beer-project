@@ -33,21 +33,19 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 | `pnpm preview`   | Preview the production build locally.                   |
 | `pnpm astro ...` | Run Astro CLI commands directly.                        |
 
-## Development Conventions & Pedagogical Style
+## Development Conventions & Collaboration Style
 
-- **Teacher/Student Dynamic:** Gemini acts as a senior engineer/mentor. Gemini provides architectural guidance, code snippets, and explanations, but **does not modify files** unless specifically requested (Directives). The user performs the implementation to reinforce learning.
-- **Senior Developer Standards:** All recommendations must favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer). Gemini will research and apply the most logical and modern patterns for every task.
-- **Code Commenting & Documentation:** All code provided by Gemini must be heavily commented with "lesson notes" explaining the *why* and *how* of every line of code to ensure the user understands the underlying logic.
+- **Senior Engineer Collaboration:** Gemini acts as a senior engineer, taking responsibility for writing and maintaining the codebase while adhering to industry best practices.
+- **Approval Workflow:** Gemini must explain the proposed changes and obtain explicit user approval before creating, editing, or deleting any files.
+- **Clear Explanations:** Instead of heavy inline "lesson notes" within the code, Gemini provides comprehensive, high-level explanations of the architecture, logic, and technical decisions in the chat.
+- **Senior Developer Standards:** All implementations favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer). 
 - **Core Principles:** 
     - **Separation of Concerns:** Isolate logic into hooks, UI into primitives, and layouts into coordinators.
     - **D.R.Y. (Don't Repeat Yourself):** Abstract repetitive logic and styles into reusable utilities or components.
-- **TypeScript:** The project is configured with TypeScript (`tsconfig.json`). Ensure type safety for all new components.
-- **Tailwind 4:** Use modern Tailwind 4 patterns. Styles are mostly handled via `@theme` variables or utility classes.
-- **Content Collections:** The blog uses the Astro 5 `glob` loader. New blog posts should follow the schema in `src/content.config.ts`.
-- **Component Hybridization:** Use `.astro` components for static parts and `.tsx` (React) for interactive elements.
-- **Formatting:** Prettier is used for code formatting.
-- **Learning & Documentation Style:** Code should be heavily commented with "lesson notes" explaining the *why* and *how*.
+- **TypeScript:** The project is configured with TypeScript (`tsconfig.json`). Ensure strict type safety for all new components and logic.
+- **Tailwind 4:** Use modern Tailwind 4 patterns (OKLCH, `@theme` variables).
 - **SSR Safety:** Wrap browser-specific APIs in `useEffect` or check `typeof window !== 'undefined'`.
+- **Formatting:** Prettier is used for code formatting.
 
 ## Planned Features (Roadmap)
 
@@ -83,13 +81,19 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
     - [x] Added URL Query Param persistence for shareable, refresh-proof searches.
     - [x] Built interactive "Suggested Search" chips in a decomposed `SearchEmptyState` component.
     - [x] Achieved Zero Layout Shift (CLS) by aligning `SearchSkeletons` with `BreweryCard` dimensions.
+    - [x] Added a "Clear" (X) reset button with URL and focus synchronization.
+    - [x] Completed Accessibility (a11y) Audit (aria-live, aria-busy, and semantic labeling).
+- [x] **Brewery Detail Engine:**
+    - [x] Implemented `getBreweryById` API utility in `src/lib/api/brewery.ts`.
+    - [x] Configured Google Maps Platform (Maps Embed API enabled with proper restrictions).
+    - [x] Implemented `src/components/brewery/brewery-hero.astro` with grayscale map integration and OKLCH overlays.
+    - [x] Implemented `src/components/brewery/brewery-details.astro` (Location & Contact cards).
+    - [x] Finalized the SSR Orchestrator in `src/pages/brewery/[id].astro`.
 
 ## Current Status / Next Steps
 
-- [ ] **Step 3.5 (Finishing Search Audit):**
-    - [ ] Add a "Clear" (X) button to the search input for quick resets.
-    - [ ] Final accessibility check for search interactions.
-- [ ] **Step 4: Brewery Detail Engine:**
-    - [ ] Build dynamic `src/pages/brewery/[id].astro` for full brewery details.
-    - [ ] Implement server-side fetching for individual brewery data.
 - [ ] **Step 5: Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB.
+    - [ ] Define the `favorites` table in `db/config.ts`.
+    - [ ] Create an Astro Action for toggling favorites.
+    - [ ] Implement the Favorite Button component (React).
+    - [ ] Integrate the button into `BreweryHero` and `BreweryCard`.
