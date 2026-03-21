@@ -19,10 +19,12 @@ const BASE_URL = 'https://api.openbrewerydb.org/v1/breweries'
 
 export async function getBreweriesByCity(
   city: string,
-  perPage = 5,
+  page = 1,
+  perPage = 10,
 ): Promise<Brewery[]> {
   const params = new URLSearchParams({
     by_city: city,
+    page: page.toString(),
     per_page: perPage.toString(),
   })
   const response = await fetch(`${BASE_URL}?${params.toString()}`)

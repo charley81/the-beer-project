@@ -9,9 +9,10 @@ export const server = {
     accept: 'form',
     input: z.object({
       city: z.string().min(2, 'Please enter at least 2 characters.'),
+      page: z.number().optional().default(1),
     }),
     handler: async (input, context) => {
-      const breweries = await getBreweriesByCity(input.city)
+      const breweries = await getBreweriesByCity(input.city, input.page)
 
       const session = await auth.api.getSession({
         headers: context.request.headers,
