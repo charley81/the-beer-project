@@ -2,15 +2,16 @@
 
 ## Project Overview
 
-**The Beer Project** is a personal learning project built with **Astro 5**, **React 19**, and **Tailwind CSS 4**. It serves as a playground for exploring modern web development features including third-party API integration (Open Brewery DB), CRUD functionality, authentication, internationalization, e-commerce, and blogging.
+**The Beer Project** is a personal learning project built with **Astro 6**, **React 19**, and **Tailwind CSS 4**. It serves as a playground for exploring modern web development features including third-party API integration (Open Brewery DB), CRUD functionality, authentication, internationalization, e-commerce, and blogging.
 
 ### Key Technologies
 
-- **Framework:** [Astro](https://astro.build/) (v5.18.0)
+- **Framework:** [Astro](https://astro.build/) (v6.0.8)
 - **UI Library:** [React](https://react.dev/) (v19.2.0)
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/) (v4.1.17) with OKLCH color space.
 - **State/Form Management:** [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/)
 - **Components:** Radix UI primitives and shadcn/ui-inspired components.
+- **Animations:** [Framer Motion](https://www.framer.com/motion/) (v12.38.0)
 
 ## Directory Structure
 
@@ -38,9 +39,9 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - **Senior Engineer Collaboration:** Gemini acts as a senior engineer, taking responsibility for writing and maintaining the codebase while adhering to industry best practices.
 - **Approval Workflow:** Gemini must explain the proposed changes and obtain explicit user approval before creating, editing, or deleting any files.
 - **Clear Explanations:** Instead of heavy inline "lesson notes" within the code, Gemini provides comprehensive, high-level explanations of the architecture, logic, and technical decisions in the chat.
-- **Senior Developer Standards:** All implementations favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 5 Content Layer). 
+- **Senior Developer Standards:** All implementations favor modern, up-to-date design patterns (e.g., Tailwind 4, React 19 primitives, Astro 6 SSR, Service Layers). 
 - **Core Principles:** 
-    - **Separation of Concerns:** Isolate logic into hooks, UI into primitives, and layouts into coordinators.
+    - **Separation of Concerns:** Isolate logic into service layers (`src/lib/api/`), UI into primitives, and layouts into coordinators.
     - **D.R.Y. (Don't Repeat Yourself):** Abstract repetitive logic and styles into reusable utilities or components.
 - **TypeScript:** The project is configured with TypeScript (`tsconfig.json`). Ensure strict type safety for all new components and logic.
 - **Tailwind 4:** Use modern Tailwind 4 patterns (OKLCH, `@theme` variables).
@@ -52,7 +53,7 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] Integration with Open Brewery DB API.
 - [x] CRUD functionality for managing blog posts with Astro DB + Turso.
 - [x] User authentication with Better-Auth (Sign Up, Login, Logout).
-- [ ] CRUD functionality for managing beer/brewery favorites.
+- [x] CRUD functionality for managing beer/brewery favorites.
 - [ ] Internationalization (i18n) support.
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
@@ -83,17 +84,26 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
     - [x] Achieved Zero Layout Shift (CLS) by aligning `SearchSkeletons` with `BreweryCard` dimensions.
     - [x] Added a "Clear" (X) reset button with URL and focus synchronization.
     - [x] Completed Accessibility (a11y) Audit (aria-live, aria-busy, and semantic labeling).
+    - [x] Implemented "Load More" pagination with 10 results per page and Framer Motion entrance animations.
 - [x] **Brewery Detail Engine:**
     - [x] Implemented `getBreweryById` API utility in `src/lib/api/brewery.ts`.
     - [x] Configured Google Maps Platform (Maps Embed API enabled with proper restrictions).
     - [x] Implemented `src/components/brewery/brewery-hero.astro` with grayscale map integration and OKLCH overlays.
     - [x] Implemented `src/components/brewery/brewery-details.astro` (Location & Contact cards).
     - [x] Finalized the SSR Orchestrator in `src/pages/brewery/[id].astro`.
+- [x] **Favorites Feature (Full Stack):**
+    - [x] Defined `Favorite` table in `db/config.ts`.
+    - [x] Created `src/lib/api/favorites.ts` service layer for DB operations.
+    - [x] Implemented `toggleFavorite` Astro Action with optimistic UI updates in React.
+    - [x] Built premium `FavoriteButton` with yellow-primary branding and floating-action-button (FAB) aesthetics.
+    - [x] Integrated favorites status into `BreweryCard` (Search) and `BreweryHero` (Details).
 
 ## Current Status / Next Steps
 
-- [ ] **Step 5: Favorites Feature:** Build CRUD functionality for brewery favorites using Astro DB.
-    - [ ] Define the `favorites` table in `db/config.ts`.
-    - [ ] Create an Astro Action for toggling favorites.
-    - [ ] Implement the Favorite Button component (React).
-    - [ ] Integrate the button into `BreweryHero` and `BreweryCard`.
+- [ ] **Step 6: User Experience & i18n:**
+    - [ ] Create `/favorites` dashboard page to view all saved breweries.
+    - [ ] Add "My Favorites" link to the `UserAuth` dropdown.
+    - [ ] Research and implement `astro-i18next` or similar for multi-language support.
+- [ ] **Step 7: E-commerce Store:**
+    - [ ] Design the `/store` landing page.
+    - [ ] Implement a mock product catalog and shopping cart system.

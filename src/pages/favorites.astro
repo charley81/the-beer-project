@@ -1,0 +1,126 @@
+---
+export const prerender = false
+
+import BaseLayout from '../layouts/base-layout.astro'
+import Section from '@/components/base/section.astro'
+import { FavoritesGrid } from '@/components/brewery/favorites-grid'
+import { getFavoriteBreweriesForUser } from '@/lib/api/favorites'
+import { auth } from '@/lib/auth'
+import { Beer, Heart, User, Mail, Calendar, ArrowRight, AlertTriangle } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+
+const session = await auth.api.getSession({
+  headers: Astro.request.headers,
+})
+
+if (!session) {
+  return Astro.redirect('/auth?redirect=/favorites')
+}
+
+const { user } = session
+let breweries = []
+let error = null
+
+try {
+  breweries = await getFavoriteBreweriesForUser(user.id)
+} catch (e) {
+  console.error('Failed to load favorites:', e)
+  error = 'We had trouble loading your saved breweries. Please try again later.'
+}
+
+const memberSince = new Date(user.createdAt).toLocaleDateString('en-US', {
+  month: 'long',
+  year: 'numeric',
+})
+---
+
+<BaseLayout 
+  title={`${user.name}'s Dashboard`}
+  description={`Your personal dashboard of breweries you've saved.`}
+>
+  <Section class="py-12 md:py-20">
+    <div class="max-w-6xl mx-auto space-y-16">
+      
+      <!-- Profile Header Section -->
+      <div class="relative overflow-hidden rounded-3xl bg-card border border-border/50 shadow-sm animate-in fade-in slide-in-from-top-4 duration-700">
+        <div class="absolute top-0 left-0 right-0 h-32 bg-linear-to-r from-primary/20 via-primary/5 to-transparent"></div>
+        
+        <div class="relative p-8 md:p-12 flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12">
+          <!-- Avatar Placeholder -->
+          <div class="relative group">
+            <div class="h-32 w-32 rounded-full bg-primary/10 border-4 border-background flex items-center justify-center shadow-xl group-hover:scale-105 transition-transform duration-500 overflow-hidden">
+               {user.image ? (
+                <img src={user.image} alt={user.name} class="h-full w-full object-cover" />
+              ) : (
+                <User className="h-16 w-16 text-primary" />
+              )}
+            </div>
+            <div class="absolute -bottom-2 -right-2 bg-primary text-primary-foreground h-10 w-10 rounded-full flex items-center justify-center border-4 border-background shadow-lg">
+              <Heart className="h-4 w-4 fill-current" />
+            </div>
+          </div>
+
+          <div class="flex-1 text-center md:text-left space-y-4">
+            <div class="space-y-1">
+              <h1 class="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
+                {user.name}
+              </h1>
+              <div class="flex flex-wrap justify-center md:justify-start gap-4 text-muted-foreground font-medium pt-1">
+                <div class="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-primary" />
+                  <span class="text-sm">{user.email}</span>
+                </div>
+                <div class="flex items-center gap-2 border-l border-border/50 pl-4">
+                  <Calendar className="h-4 w-4 text-primary" />
+                  <span class="text-sm">Member since {memberSince}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-4">
+              <Badge variant="outline" className="bg-primary/5 border-primary/20 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-primary">
+                {breweries.length} Saved {breweries.length === 1 ? 'Brewery' : 'Breweries'}
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-1.5 text-xs font-bold uppercase tracking-widest bg-secondary/80">
+                Premium Explorer
+              </Badge>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Favorites Section -->
+      <div class="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+        <div class="flex items-end justify-between px-2">
+          <div class="space-y-1">
+            <h2 class="text-3xl font-black tracking-tight flex items-center gap-3">
+              <Beer className="h-8 w-8 text-primary" />
+              Saved Breweries
+            </h2>
+            <p class="text-muted-foreground font-medium">Manage your personal collection of local breweries.</p>
+          </div>
+          
+          {breweries.length > 0 && !error && (
+             <a href="/search" class="hidden md:flex items-center gap-2 text-sm font-bold text-primary hover:translate-x-1 transition-all">
+              Discover More <ArrowRight className="h-4 w-4" />
+            </a>
+          )}
+        </div>
+
+        {error ? (
+          <Alert variant="destructive" className="bg-destructive/5 border-destructive/20 py-8">
+            <AlertTriangle className="h-6 w-6" />
+            <AlertTitle className="text-xl font-bold ml-2">Oops! Something went wrong.</AlertTitle>
+            <AlertDescription className="ml-2 font-medium">
+              {error}
+            </AlertDescription>
+          </Alert>
+        ) : (
+          <FavoritesGrid client:load initialBreweries={breweries} />
+        )}
+      </div>
+
+    </div>
+  </Section>
+</BaseLayout>

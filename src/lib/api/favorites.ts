@@ -1,4 +1,5 @@
 import { db, Favorite, eq, and } from 'astro:db'
+import { getBreweriesByIds, type Brewery } from './brewery'
 
 /**
  * Service to handle favorites-related logic.
@@ -11,6 +12,16 @@ export async function getFavoriteIdsForUser(userId: string): Promise<string[]> {
     .where(eq(Favorite.userId, userId))
 
   return favorites.map((f) => f.breweryId)
+}
+
+/**
+ * Fetches all full brewery objects favorited by a user.
+ */
+export async function getFavoriteBreweriesForUser(userId: string): Promise<Brewery[]> {
+  const ids = await getFavoriteIdsForUser(userId)
+  if (ids.length === 0) return []
+  
+  return await getBreweriesByIds(ids)
 }
 
 export async function isBreweryFavorited(userId: string, breweryId: string): Promise<boolean> {
