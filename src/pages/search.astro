@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
 import { BrewerySearch } from '@/components/brewery/brewery-search'
 import { getBreweriesByCity } from '@/lib/api/brewery'
-import { db, Favorite, eq } from 'astro:db'
+import { getFavoriteIdsForUser } from '@/lib/api/favorites'
 import { auth } from '@/lib/auth'
 
 const initialCity = Astro.url.searchParams.get('city') || ''
@@ -18,15 +18,7 @@ if (initialCity && initialCity.trim().length >= 2) {
       headers: Astro.request.headers,
     })
 
-    let favoriteIds: string[] = []
-    if (session?.user) {
-      const favorites = await db
-        .select({ breweryId: Favorite.breweryId })
-        .from(Favorite)
-        .where(eq(Favorite.userId, session.user.id))
-
-      favoriteIds = favorites.map((f) => f.breweryId)
-    }
+    const favoriteIds = session?.user ? await getFavoriteIdsForUser(session.user.id) : []
 
     initialData = {
       data: { breweries, favoriteIds },

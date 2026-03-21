@@ -1,7 +1,7 @@
 import { defineAction, ActionError } from 'astro:actions'
 import { z } from 'astro:schema'
 import { getBreweriesByCity } from '@/lib/api/brewery'
-import { db, Favorite, and, eq } from 'astro:db'
+import { getFavoriteIdsForUser, toggleFavorite } from '@/lib/api/favorites'
 import { auth } from '@/lib/auth'
 
 export const server = {
@@ -18,15 +18,7 @@ export const server = {
         headers: context.request.headers,
       })
 
-      let favoriteIds: string[] = []
-      if (session?.user) {
-        const favorites = await db
-          .select({ breweryId: Favorite.breweryId })
-          .from(Favorite)
-          .where(eq(Favorite.userId, session.user.id))
-
-        favoriteIds = favorites.map((f) => f.breweryId)
-      }
+      const favoriteIds = session?.user ? await getFavoriteIdsForUser(session.user.id) : []
 
       return {
         breweries,
@@ -51,38 +43,8 @@ export const server = {
         })
       }
 
-      const userId = session.user.id
-
-      const existing = await db
-        .select()
-        .from(Favorite)
-        .where(
-          and(
-            eq(Favorite.userId, userId),
-            eq(Favorite.breweryId, input.breweryId)
-          )
-        )
-        .get()
-
-      if (existing) {
-        await db
-          .delete(Favorite)
-          .where(
-            and(
-              eq(Favorite.userId, userId),
-              eq(Favorite.breweryId, input.breweryId)
-            )
-          )
-        return { favorited: false }
-      } else {
-        await db.insert(Favorite).values({
-          id: crypto.randomUUID(),
-          userId,
-          breweryId: input.breweryId,
-          createdAt: new Date(),
-        })
-        return { favorited: true }
-      }
+      const favorited = await toggleFavorite(session.user.id, input.breweryId)
+      return { favorited }
     },
   }),
 }

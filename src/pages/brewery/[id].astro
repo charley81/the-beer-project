@@ -8,7 +8,7 @@ import BreweryHero from '@/components/brewery/brewery-hero.astro'
 import BreweryDetails from '@/components/brewery/brewery-details.astro'
 import Section from '@/components/base/section.astro'
 import { ArrowLeft } from 'lucide-react'
-import { db, Favorite, and, eq } from 'astro:db'
+import { isBreweryFavorited } from '@/lib/api/favorites'
 import { auth } from '@/lib/auth'
 
 const { id } = Astro.params
@@ -28,17 +28,7 @@ try {
   brewery = await getBreweryById(id)
 
   if (session?.user) {
-    const favorite = await db
-      .select()
-      .from(Favorite)
-      .where(
-        and(
-          eq(Favorite.userId, session.user.id),
-          eq(Favorite.breweryId, id)
-        )
-      )
-      .get()
-    isFavorited = !!favorite
+    isFavorited = await isBreweryFavorited(session.user.id, id)
   }
 } catch (error) {
   console.error('Error fetching brewery or favorite status:', error)
@@ -46,7 +36,10 @@ try {
 }
 ---
 
-<BaseLayout title={`${brewery.name} | The Beer Project`}>
+<BaseLayout 
+  title={`${brewery.name} | ${brewery.city}, ${brewery.state_province || brewery.state}`}
+  description={`Visit ${brewery.name} in ${brewery.city}, ${brewery.state_province || brewery.state}. Get directions, contact info, and more.`}
+>
   <main class="pb-20">
     <BreweryHero brewery={brewery} isFavorited={isFavorited} />
 
@@ -54,7 +47,7 @@ try {
       <div class="max-w-5xl mx-auto space-y-12">
         <div class="flex">
           <a 
-            href="/search" 
+            href={`/search?city=${encodeURIComponent(brewery.city)}`}
             class="group flex items-center gap-3 text-sm font-bold tracking-tight text-foreground transition-colors hover:text-primary"
           >
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-all duration-300 group-hover:bg-transparent group-hover:border-2 group-hover:border-primary group-hover:text-primary">
@@ -62,21 +55,15 @@ try {
                 className="w-5 h-5 transition-transform group-hover:-translate-x-1"
               />
             </div>
-            <span>Back to Search</span>
+            <span>Back to Results</span>
           </a>
         </div>
 
         <BreweryDetails brewery={brewery} />
 
         <div class="border-t border-border/50 pt-12 text-center">
-          <div
-            class="inline-block p-1 px-3 rounded-full bg-secondary/50 text-[10px] uppercase tracking-widest font-bold text-muted-foreground mb-4"
-          >
-            Coming Soon
-          </div>
           <p class="text-muted-foreground italic text-sm max-w-sm mx-auto">
-            You'll soon be able to save your favorite breweries to your personal
-            dashboard.
+            Information provided by Open Brewery DB.
           </p>
         </div>
       </div>
