@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets'
 import MainNav from '../components/main-nav/main-nav.astro'
 import { ClientRouter } from 'astro:transitions'
+import { Toaster } from '@/components/ui/sonner'
 import '../styles/global.css'
 
 interface Props {
@@ -60,6 +61,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     ]}
   >
     <MainNav transparent={transparentNav} />
+    <Toaster client:load position="top-center" richColors />
 
     <main
       class:list={[

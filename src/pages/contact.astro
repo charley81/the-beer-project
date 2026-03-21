@@ -2,10 +2,23 @@
 import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
+import { ContactForm } from '@/components/contact/contact-form'
+
 ---
 
-<BaseLayout title="Contact">
-  <Section>
-    <PageHeader heading="Contact" description=`contact form coming soon...` />
+<BaseLayout title="Contact" fixed>
+  <Section class="flex h-full flex-col overflow-hidden py-12">
+    <div class="max-w-2xl mx-auto w-full space-y-12">
+      <div class="text-center space-y-4">
+        <PageHeader 
+          heading="Get in Touch" 
+          description="Have a question or just want to talk beer? We'd love to hear from you." 
+        />
+      </div>
+
+      <div class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <ContactForm client:load />
+      </div>
+    </div>
   </Section>
 </BaseLayout>
