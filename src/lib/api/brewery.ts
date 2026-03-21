@@ -37,6 +37,22 @@ export async function getBreweriesByCity(
   return data
 }
 
+export async function getBreweriesByIds(ids: string[]): Promise<Brewery[]> {
+  if (ids.length === 0) return []
+
+  const params = new URLSearchParams({
+    by_ids: ids.join(','),
+  })
+  const response = await fetch(`${BASE_URL}?${params.toString()}`)
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch breweries by IDs: ${response.statusText}`)
+  }
+
+  const data = (await response.json()) as Brewery[]
+  return data
+}
+
 export async function getBreweryById(id: string): Promise<Brewery> {
   const response = await fetch(`${BASE_URL}/${id}`)
 
