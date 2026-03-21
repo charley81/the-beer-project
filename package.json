@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@astrojs/db": "^0.20.0",
-    "@astrojs/netlify": "^7.0.2",
-    "@astrojs/react": "^5.0.0",
+    "@astrojs/netlify": "^7.0.4",
+    "@astrojs/react": "^5.0.1",
     "@astrojs/rss": "^4.0.17",
     "@better-auth/drizzle-adapter": "^1.5.4",
     "@hookform/resolvers": "3.3.4",
@@ -20,7 +20,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "astro": "^6.0.4",
+    "astro": "^6.0.8",
     "better-auth": "^1.5.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -44,5 +44,10 @@
   },
   "volta": {
     "node": "22.22.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "libsql": "0.5.0"
+    }
   }
 }

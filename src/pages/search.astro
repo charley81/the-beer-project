@@ -3,8 +3,42 @@ import PageHeader from '../components/page-header.astro'
 import BaseLayout from '../layouts/base-layout.astro'
 import Section from '@/components/base/section.astro'
 import { BrewerySearch } from '@/components/brewery/brewery-search'
+import { getBreweriesByCity } from '@/lib/api/brewery'
+import { db, Favorite, eq } from 'astro:db'
+import { auth } from '@/lib/auth'
 
 const initialCity = Astro.url.searchParams.get('city') || ''
+let initialData = null
+
+if (initialCity && initialCity.trim().length >= 2) {
+  try {
+    const breweries = await getBreweriesByCity(initialCity)
+    
+    const session = await auth.api.getSession({
+      headers: Astro.request.headers,
+    })
+
+    let favoriteIds: string[] = []
+    if (session?.user) {
+      const favorites = await db
+        .select({ breweryId: Favorite.breweryId })
+        .from(Favorite)
+        .where(eq(Favorite.userId, session.user.id))
+
+      favoriteIds = favorites.map((f) => f.breweryId)
+    }
+
+    initialData = {
+      data: { breweries, favoriteIds },
+      error: null
+    }
+  } catch (e) {
+    initialData = {
+      data: { breweries: [], favoriteIds: [] },
+      error: { message: 'Failed to load initial results.' }
+    }
+  }
+}
 ---
 
 <BaseLayout title="Search" fixed>
@@ -16,7 +50,11 @@ const initialCity = Astro.url.searchParams.get('city') || ''
       />
     </div>
     <div class="min-h-0 flex-1">
-      <BrewerySearch client:load initialCity={initialCity} />
+      <BrewerySearch 
+        client:load 
+        initialCity={initialCity} 
+        initialData={initialData}
+      />
     </div>
   </Section>
 </BaseLayout>

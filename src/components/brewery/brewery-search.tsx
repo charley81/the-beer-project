@@ -1,15 +1,15 @@
-import { useActionState, useRef, useEffect, useState } from 'react'
+import { useActionState, useRef, useEffect, useState, startTransition } from 'react'
 import { actions, isActionError } from 'astro:actions'
 import { BreweryCard } from './brewery-card'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Skeleton } from '../ui/skeleton'
-import { Search as SearchIcon, MapPin, Beer, Loader2, X } from 'lucide-react'
+import { Search as SearchIcon, MapPin, Loader2, X } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert'
 import { Card, CardHeader, CardContent, CardFooter } from '../ui/card'
 import { SearchEmptyState } from './search-empty-state'
 
-export function BrewerySearch({ initialCity = '' }) {
+export function BrewerySearch({ initialCity = '', initialData = null }) {
   const formRef = useRef<HTMLFormElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -21,7 +21,7 @@ export function BrewerySearch({ initialCity = '' }) {
 
       if (!city || city.trim().length < 2) {
         return {
-          data: [],
+          data: { breweries: [], favoriteIds: [] },
           error: { message: 'City name is too short (minimum 2 characters).' },
         }
       }
@@ -32,7 +32,7 @@ export function BrewerySearch({ initialCity = '' }) {
 
       return await actions.search(formData)
     },
-    null,
+    initialData,
   )
 
   const handleClear = () => {
@@ -46,26 +46,17 @@ export function BrewerySearch({ initialCity = '' }) {
   }
 
   const handleQuickSearch = (city: string) => {
-    if (inputRef.current) {
-      inputRef.current.value = city
-      const formData = new FormData()
-      formData.set('city', city)
+    setQuery(city)
+    const formData = new FormData()
+    formData.set('city', city)
+    startTransition(() => {
       formAction(formData)
-    }
+    })
   }
-
-  useEffect(() => {
-    if (initialCity && formRef.current) {
-      const formData = new FormData()
-      formData.set('city', initialCity)
-
-      formAction(formData)
-    }
-  }, [])
 
   const hasQuery = query.trim().length >= 2
   const results = state?.data?.breweries || []
-  const favoriteIds = state?.data?.favoriteIds || []
+  const favoriteIds = (state?.data as any)?.favoriteIds || []
   const showResults = hasQuery && results.length > 0
   const error = state?.error
   const hasSearched = state !== null && hasQuery
@@ -83,7 +74,6 @@ export function BrewerySearch({ initialCity = '' }) {
             <Input
               ref={inputRef}
               name="city"
-              defaultValue={initialCity}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Enter a city (e.g. San Diego)..."
@@ -144,9 +134,9 @@ export function BrewerySearch({ initialCity = '' }) {
             </div>
           ) : results.length > 0 ? (
             results.map((brewery: any) => (
-              <BreweryCard 
-                key={brewery.id} 
-                brewery={brewery} 
+              <BreweryCard
+                key={brewery.id}
+                brewery={brewery}
                 isFavorited={favoriteIds.includes(brewery.id)}
               />
             ))

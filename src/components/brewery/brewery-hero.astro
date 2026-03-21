@@ -17,15 +17,14 @@ const GOOGLE_MAPS_API_KEY = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY
  * We use the brewery name + address for the 'q' parameter.
  * This is the most reliable way to get a 'Place' marker in the Embed API.
  */
-const address = `${b.street || ''} ${b.city}, ${b.state_province || b.state} ${b.postal_code || ''}`.trim()
+const address =
+  `${b.street || ''} ${b.city}, ${b.state_province || b.state} ${b.postal_code || ''}`.trim()
 const mapQuery = `${b.name}, ${address}`
 
 const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API_KEY}&q=${encodeURIComponent(mapQuery)}`
 ---
 
-<section
-  class="relative h-[500px] md:h-[600px] w-full overflow-hidden bg-muted"
->
+<section class="relative h-125 md:h-150 w-full overflow-hidden bg-muted">
   <!-- Map Layer (Interactable) -->
   <div class="absolute inset-0 z-0">
     {
@@ -66,10 +65,10 @@ const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API
               {b.brewery_type.replace(/_/g, ' ')}
             </Badge>
           </div>
-          
-          <FavoriteButton 
-            client:load 
-            breweryId={b.id} 
+
+          <FavoriteButton
+            client:load
+            breweryId={b.id}
             initialIsFavorited={isFavorited}
             className="bg-background/20 backdrop-blur-md border border-white/10 shadow-xl"
           />
@@ -86,7 +85,9 @@ const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${GOOGLE_MAPS_API
             class="flex items-center gap-2.5 text-muted-foreground text-xl md:text-2xl font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-150"
           >
             <MapPin className="w-6 h-6 text-primary" />
-            <span class="drop-shadow-sm">{b.city}, {b.state_province || b.state}</span>
+            <span class="drop-shadow-sm"
+              >{b.city}, {b.state_province || b.state}</span
+            >
           </div>
         </div>
       </div>
