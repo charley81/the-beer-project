@@ -62,18 +62,18 @@ export function FavoriteButton({
       onClick={handleToggle}
       disabled={isLoading}
       className={cn(
-        'group h-10 w-10 rounded-full transition-all duration-300',
+        'group h-11 w-11 rounded-full transition-all duration-300 shadow-sm border border-border/50 backdrop-blur-sm',
         isFavorited
-          ? 'bg-primary/10 text-primary hover:bg-primary/20'
-          : 'hover:bg-primary/10 hover:text-primary',
+          ? 'bg-primary/10 text-primary hover:bg-primary/20 border-primary/30'
+          : 'bg-background/80 hover:bg-background hover:text-primary hover:border-primary/30 hover:shadow-md',
         className
       )}
       aria-label={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
     >
       <Heart
         className={cn(
-          'h-5 w-5 transition-all duration-300',
-          isFavorited ? 'fill-current scale-110' : 'group-hover:scale-110'
+          'h-5 w-5 transition-all duration-500',
+          isFavorited ? 'fill-current scale-110 text-primary' : 'group-hover:scale-120'
         )}
       />
     </Button>
