@@ -1,0 +1,135 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { Button } from '../ui/button'
+import { MapPin, Navigation, Phone, Globe, ExternalLink } from 'lucide-react'
+import { type Brewery } from '@/lib/api/brewery'
+
+interface Props {
+  brewery: Brewery
+}
+
+const { brewery: b } = Astro.props
+
+const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+  `${b.name} ${b.street || ''} ${b.city} ${b.state_province || b.state}`,
+)}`
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <Card className="border-border/50 shadow-xs">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2.5 text-xl font-bold">
+        <div class="p-2 rounded-lg bg-primary/10">
+          <MapPin className="w-5 h-5 text-primary" />
+        </div>
+        Location
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-8">
+      <div class="space-y-2">
+        <p class="text-xl font-semibold text-foreground leading-tight">
+          {b.street || 'Address not provided'}
+        </p>
+        <div class="space-y-0.5">
+          <p class="text-muted-foreground font-medium">
+            {b.city}, {b.state_province || b.state}
+            {b.postal_code}
+          </p>
+          <p
+            class="text-muted-foreground text-xs uppercase tracking-widest font-bold opacity-70"
+          >
+            {b.country}
+          </p>
+        </div>
+      </div>
+
+      <Button
+        asChild
+        variant="outline"
+        className="w-full h-11 border-primary/20 hover:bg-primary/5 hover:text-primary transition-all duration-300"
+      >
+        <a href={directionsUrl} target="_blank" rel="noopener noreferrer">
+          <Navigation className="w-4 h-4 mr-2" />
+          Get Directions
+        </a>
+      </Button>
+    </CardContent>
+  </Card>
+
+  <Card className="border-border/50 shadow-xs">
+    <CardHeader>
+      <CardTitle className="flex items-center gap-2.5 text-xl font-bold">
+        <div class="p-2 rounded-lg bg-primary/10">
+          <Globe className="w-5 h-5 text-primary" />
+        </div>
+        Contact Info
+      </CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-8">
+      <div class="space-y-6">
+        <div class="flex items-start gap-4 group">
+          <div
+            class="p-3 rounded-full bg-secondary group-hover:bg-primary/10 transition-colors duration-300"
+          >
+            <Phone
+              className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
+            />
+          </div>
+          <div class="flex flex-col">
+            <span
+              class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-0.5"
+              >Phone Number</span
+            >
+            {
+              b.phone ? (
+                <a
+                  href={`tel:${b.phone}`}
+                  class="text-lg font-medium hover:text-primary transition-colors"
+                >
+                  {b.phone}
+                </a>
+              ) : (
+                <span class="text-lg text-muted-foreground italic font-medium">
+                  Not available
+                </span>
+              )
+            }
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 group">
+          <div
+            class="p-3 rounded-full bg-secondary group-hover:bg-primary/10 transition-colors duration-300"
+          >
+            <Globe
+              className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors"
+            />
+          </div>
+          <div class="flex flex-col">
+            <span
+              class="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mb-0.5"
+              >Official Website</span
+            >
+            {
+              b.website_url ? (
+                <a
+                  href={b.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  Visit Website
+                  <ExternalLink className="w-4 h-4 opacity-50" />
+                </a>
+              ) : (
+                <span class="text-lg text-muted-foreground italic font-medium">
+                  Not available
+                </span>
+              )
+            }
+          </div>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+</div>

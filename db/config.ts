@@ -65,6 +65,15 @@ const Verification = defineTable({
   },
 })
 
+const Favorite = defineTable({
+  columns: {
+    id: column.text({ primaryKey: true }),
+    userId: column.text({ references: () => User.columns.id }),
+    breweryId: column.text(),
+    createdAt: column.date({ default: new Date() }),
+  },
+})
+
 export default defineDb({
-  tables: { BlogPost, User, Session, Account, Verification },
+  tables: { BlogPost, User, Session, Account, Verification, Favorite },
 })

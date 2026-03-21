@@ -1,0 +1,7 @@
+
+> the-beer-project@0.0.1 astro /Users/chrisharley/Desktop/the-beer-project
+> astro dev --no-open
+
+09:12:30 [@astrojs/netlify] Enabling sessions with Netlify Blobs
+[vite] connected.
+ ELIFECYCLE  Command failed with exit code 143.

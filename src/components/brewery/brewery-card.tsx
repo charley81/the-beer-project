@@ -10,14 +10,23 @@ import {
 import { Badge } from '../ui/badge'
 import { buttonVariants } from '../ui/button'
 import { MapPin, Globe, Phone, ExternalLink } from 'lucide-react'
+import { FavoriteButton } from './favorite-button'
 
 interface BreweryCardProps {
   brewery: Brewery
+  isFavorited?: boolean
 }
 
-export function BreweryCard({ brewery }: BreweryCardProps) {
+export function BreweryCard({ brewery, isFavorited = false }: BreweryCardProps) {
   return (
-    <Card className="flex flex-col h-full overflow-hidden transition-all hover:shadow-md">
+    <Card className="group flex flex-col h-full overflow-hidden transition-all hover:shadow-md relative">
+      <div className="absolute top-3 right-3 z-20">
+        <FavoriteButton
+          breweryId={brewery.id}
+          initialIsFavorited={isFavorited}
+        />
+      </div>
+
       <CardHeader className="space-y-3 pb-4">
         <div className="flex items-start justify-between gap-4">
           <CardTitle className="text-xl font-bold leading-tight">
