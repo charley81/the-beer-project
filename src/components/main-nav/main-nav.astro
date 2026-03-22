@@ -7,10 +7,7 @@ interface Props {
 }
 
 const { transparent = false } = Astro.props
-const session = await auth.api.getSession({
-  headers: Astro.request.headers,
-})
-
+const { session } = Astro.locals
 const pathname = Astro.url.pathname
 ---
 
