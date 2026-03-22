@@ -28,7 +28,7 @@ export function UserAuth({ session, mobile = false }: UserAuthProps) {
     })
   }
 
-  if (isPending && !currentUser) {
+  if (isPending && !currentUser && !session) {
     return <div className={mobile ? 'h-12' : 'w-16 h-8'} />
   }
 
@@ -38,9 +38,7 @@ export function UserAuth({ session, mobile = false }: UserAuthProps) {
     }
 
     return (
-      <div
-        className="flex flex-col gap-6"
-      >
+      <div className="flex flex-col gap-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-black">
             {currentUser.name[0]}

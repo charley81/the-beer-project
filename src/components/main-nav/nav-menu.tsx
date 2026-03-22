@@ -13,23 +13,22 @@ import {
 } from '../ui/sheet'
 import { Button } from '../ui/button'
 
-export function NavMenu({
-  session: initialSession,
-  pathname: initialPathname,
+const NavLinks = ({
+  mobile = false,
+  onSelect,
+  pathname,
 }: {
-  session: any
+  mobile?: boolean
+  onSelect?: () => void
   pathname: string
-}) {
-  const [isOpen, setIsOpen] = React.useState(false)
-
-  const pathname = initialPathname
-
+}) => {
   const isActive = (href: string) => {
+    if (!pathname) return false
     if (href === '/') return pathname === '/'
     return pathname.startsWith(href)
   }
 
-  const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
+  return (
     <ul
       className={`flex ${mobile ? 'flex-col gap-6 mt-8' : 'items-center gap-6'}`}
     >
@@ -37,7 +36,7 @@ export function NavMenu({
         <li key={link.href}>
           <a
             href={link.href}
-            onClick={() => setIsOpen(false)}
+            onClick={onSelect}
             className={`transition-colors  ${
               isActive(link.href)
                 ? 'text-primary underline decoration-2 underline-offset-4'
@@ -50,16 +49,29 @@ export function NavMenu({
       ))}
     </ul>
   )
+}
+
+export function NavMenu({
+  session: initialSession,
+  pathname: initialPathname,
+}: {
+  session: any
+  pathname: string
+}) {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const pathname = initialPathname || '/'
 
   return (
-    <div className="flex items-center">
-      <div className="hidden lg:flex items-center gap-8">
-        <NavLinks />
+    <div className="flex items-center gap-4">
+      <div className="hidden lg:flex items-center gap-6">
+        <NavLinks pathname={pathname} />
+
         <div className="h-6 w-px bg-nav-fg/20 mx-2" />
+
         <UserAuth session={initialSession} />
       </div>
 
-      <div className="lg:hidden">
+      <div className="lg:hidden flex items-center gap-3">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
@@ -74,7 +86,7 @@ export function NavMenu({
 
           <SheetContent
             side="right"
-            className="w-[300px] sm:w-max-sm bg-nav text-nav-fg border-l-primary/20"
+            className="w-75 sm:w-max-sm bg-nav text-nav-fg border-l-primary/20"
           >
             <SheetHeader className="text-left border-b border-nav-fg/10 pb-4">
               <SheetTitle className="text-nav-fg text-2xl font-black italic">
@@ -84,7 +96,11 @@ export function NavMenu({
 
             <nav className="flex flex-col h-full justify-between pb-12 px-4">
               <div className="flex flex-col gap-8">
-                <NavLinks mobile />
+                <NavLinks
+                  mobile
+                  pathname={pathname}
+                  onSelect={() => setIsOpen(false)}
+                />
               </div>
 
               <div className="border-t border-nav-fg/10 pt-8 mt-auto">

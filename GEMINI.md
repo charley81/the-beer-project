@@ -105,5 +105,7 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
     - [ ] Add "My Favorites" link to the `UserAuth` dropdown.
     - [ ] Research and implement `astro-i18next` or similar for multi-language support.
 - [ ] **Step 7: E-commerce Store:**
-    - [ ] Design the `/store` landing page.
+    - [x] Design the `/store` landing page.
     - [ ] Implement a mock product catalog and shopping cart system.
+- [ ] **Step 8: E-commerce Store (Troubleshooting):**
+    - [ ] **Debug Cart behavior:** The cart is currently "acting crazy" and needs investigation in the next session.
