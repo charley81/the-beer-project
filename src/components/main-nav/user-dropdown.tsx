@@ -53,12 +53,12 @@ export function UserDropdown({ user, onLogout }: UserDropdownProps) {
           <DropdownMenuItem asChild className="cursor-pointer focus:bg-primary/10 focus:text-primary transition-colors py-2.5">
             <a href="/favorites" className="flex w-full items-center">
               <Heart className="mr-3 h-4 w-4" />
-              <span class="font-bold text-xs uppercase tracking-widest">My Favorites</span>
+              <span className="font-bold text-xs uppercase tracking-widest">My Favorites</span>
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem disabled className="cursor-not-allowed opacity-50 py-2.5">
             <Settings className="mr-3 h-4 w-4" />
-            <span class="font-bold text-xs uppercase tracking-widest text-muted-foreground">Settings (Coming Soon)</span>
+            <span className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Settings (Coming Soon)</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -67,7 +67,7 @@ export function UserDropdown({ user, onLogout }: UserDropdownProps) {
           className="cursor-pointer focus:bg-destructive/10 focus:text-destructive transition-colors py-2.5"
         >
           <LogOut className="mr-3 h-4 w-4" />
-          <span class="font-bold text-xs uppercase tracking-widest">Log out</span>
+          <span className="font-bold text-xs uppercase tracking-widest">Log out</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
