@@ -10,15 +10,11 @@ import { Beer, Heart, User, Mail, Calendar, ArrowRight, AlertTriangle } from 'lu
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 
-const session = await auth.api.getSession({
-  headers: Astro.request.headers,
-})
+const { user } = Astro.locals
 
-if (!session) {
+if (!user) {
   return Astro.redirect('/auth?redirect=/favorites')
 }
-
-const { user } = session
 let breweries = []
 let error = null
 

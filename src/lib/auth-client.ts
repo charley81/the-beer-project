@@ -2,11 +2,9 @@ import { createAuthClient } from 'better-auth/react'
 
 /**
  * LESSON: Client-side Auth Client
- * We MUST NOT import { env } from 'better-auth' here, as that is the 
- * server-side package. We use import.meta.env for client-side environment variables.
+ * In Astro, you don't need to pass the baseURL if you're using the default path (/api/auth).
+ * This ensures the client uses relative paths, avoiding CORS and protocol issues in production.
  */
-export const authClient = createAuthClient({
-  baseURL: import.meta.env.PUBLIC_BETTER_AUTH_URL || 'http://localhost:4321',
-})
+export const authClient = createAuthClient()
 
 export const { signIn, signUp, signOut, useSession } = authClient

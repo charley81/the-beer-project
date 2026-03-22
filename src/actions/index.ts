@@ -14,11 +14,9 @@ export const server = {
     handler: async (input, context) => {
       const breweries = await getBreweriesByCity(input.city, input.page)
 
-      const session = await auth.api.getSession({
-        headers: context.request.headers,
-      })
+      const { user } = context.locals
 
-      const favoriteIds = session?.user ? await getFavoriteIdsForUser(session.user.id) : []
+      const favoriteIds = user ? await getFavoriteIdsForUser(user.id) : []
 
       return {
         breweries,
@@ -32,18 +30,16 @@ export const server = {
       breweryId: z.string(),
     }),
     handler: async (input, context) => {
-      const session = await auth.api.getSession({
-        headers: context.request.headers,
-      })
+      const { user } = context.locals
 
-      if (!session) {
+      if (!user) {
         throw new ActionError({
           code: 'UNAUTHORIZED',
           message: 'You must be logged in to favorite a brewery.',
         })
       }
 
-      const favorited = await toggleFavorite(session.user.id, input.breweryId)
+      const favorited = await toggleFavorite(user.id, input.breweryId)
       return { favorited }
     },
   }),
