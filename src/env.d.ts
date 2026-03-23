@@ -6,3 +6,14 @@ declare namespace App {
     session: import('better-auth').Session | null
   }
 }
+
+interface Window {
+  SnipcartSettings: {
+    publicApiKey: string
+    loadStrategy?: 'on-user-interaction' | 'immediate'
+    modalStyle?: 'side' | 'full'
+    addProductBehavior?: 'none' | 'show'
+    [key: string]: any
+  }
+  Snipcart: any
+}

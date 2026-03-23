@@ -58,54 +58,31 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [ ] E-commerce functionality (Store).
 - [ ] Expanded blog with more content.
 
-## Recent Progress (Theming, Navigation & Hero)
+## Recent Progress (Auth, Store & UI Refinement)
 
-- [x] **Semantic Theming:** Migrated from hardcoded color classes to shadcn-style OKLCH theme variables in `global.css`.
-- [x] **Dark Mode Implementation:** Added an inline script in `BaseLayout.astro` for flash-protection and implemented a `ModeToggle` component.
-- [x] **Responsive Navigation:** Built a high-performance, accessible responsive nav using shadcn `Sheet`.
-- [x] **Success Lifecycle:** Implemented a 2-second "Success/Redirecting" delay in `AuthForm` to provide visual feedback before navigation.
-- [x] **Astro 6 Font API:** Implemented "Fredoka" Google Font using the new built-in Font API (`fontProviders.google()`) and the `<Font />` component for zero-layout-shift and self-hosting.
-- [x] **Client Router (View Transitions):** Enabled `<ClientRouter />` and `transition:persist` on `NavMenu` to prevent auth-state flickering and provide an "App-like" navigation experience.
-- [x] **Full-Screen Hero Refinement:**
-    - [x] Implemented left-aligned Hero content matching `MainNav` container logic.
-    - [x] Applied Fredoka typography and custom `hero-description` utility for maximum impact.
-    - [x] Added `bg-linear-to-b` gradient to `MainNav` for seamless hero integration.
-- [x] **UI System Audit & Refactor:**
-    - [x] Audited interactive components for consistency.
-    - [x] Refactored `UserAuth.tsx` and `NavMenu.tsx` to use shadcn `Button` primitives with `asChild`.
-- [x] **Modern Navigation & Layout Engine:**
-    - [x] Implemented sticky navigation with scroll-triggered glassmorphism.
-    - [x] Resolved 100vh "mystery scroll" using Flexbox `grow` and `min-h-0` strategy.
-    - [x] Refined `BaseLayout` to support both full-screen Hero sections and centered content pages.
-- [x] **Advanced Search Architecture:**
-    - [x] Implemented React 19 `useActionState` with Astro Actions for type-safe searching.
-    - [x] Added URL Query Param persistence for shareable, refresh-proof searches.
-    - [x] Built interactive "Suggested Search" chips in a decomposed `SearchEmptyState` component.
-    - [x] Achieved Zero Layout Shift (CLS) by aligning `SearchSkeletons` with `BreweryCard` dimensions.
-    - [x] Added a "Clear" (X) reset button with URL and focus synchronization.
-    - [x] Completed Accessibility (a11y) Audit (aria-live, aria-busy, and semantic labeling).
-    - [x] Implemented "Load More" pagination with 10 results per page and Framer Motion entrance animations.
-- [x] **Brewery Detail Engine:**
-    - [x] Implemented `getBreweryById` API utility in `src/lib/api/brewery.ts`.
-    - [x] Configured Google Maps Platform (Maps Embed API enabled with proper restrictions).
-    - [x] Implemented `src/components/brewery/brewery-hero.astro` with grayscale map integration and OKLCH overlays.
-    - [x] Implemented `src/components/brewery/brewery-details.astro` (Location & Contact cards).
-    - [x] Finalized the SSR Orchestrator in `src/pages/brewery/[id].astro`.
-- [x] **Favorites Feature (Full Stack):**
-    - [x] Defined `Favorite` table in `db/config.ts`.
-    - [x] Created `src/lib/api/favorites.ts` service layer for DB operations.
-    - [x] Implemented `toggleFavorite` Astro Action with optimistic UI updates in React.
-    - [x] Built premium `FavoriteButton` with yellow-primary branding and floating-action-button (FAB) aesthetics.
-    - [x] Integrated favorites status into `BreweryCard` (Search) and `BreweryHero` (Details).
+- [x] **Better Auth Overhaul (Production Ready):**
+    - [x] Resolved production `NetworkError` by migrating to relative paths in `auth-client.ts`.
+    - [x] Corrected DB provider to `sqlite` in `auth.ts` for Astro DB (LibSQL) compatibility.
+    - [x] Implemented global session middleware (`src/middleware.ts`) to populate `Astro.locals`.
+    - [x] Added project-wide type safety for auth locals in `src/env.d.ts`.
+    - [x] Refactored Favorites page, Main Navigation, and Astro Actions to use the efficient `Astro.locals` pattern.
+- [x] **Store Front-End Implementation:**
+    - [x] Designed and built the `/store` landing page with premium product cards and OKLCH effects.
+    - [x] Implemented dynamic product detail pages at `/products/[slug]`.
+    - [x] Created a reusable `StoreButton` component as a placeholder for checkout logic.
+- [x] **Codebase Cleanup:**
+    - [x] Removed redundant `products/index.astro` in favor of the unified `store.astro`.
+    - [x] Deleted unused `api/blog` CRUD endpoint (now using Content Layer).
+    - [x] Removed initial Snipcart attempt to prepare for a clean integration.
+- [x] **UI Polishing:**
+    - [x] Refined "Back to Blog" button with a static, transparent-on-hover style for better consistency.
 
 ## Current Status / Next Steps
 
-- [ ] **Step 6: User Experience & i18n:**
-    - [ ] Create `/favorites` dashboard page to view all saved breweries.
-    - [ ] Add "My Favorites" link to the `UserAuth` dropdown.
-    - [ ] Research and implement `astro-i18next` or similar for multi-language support.
-- [ ] **Step 7: E-commerce Store:**
-    - [x] Design the `/store` landing page.
-    - [ ] Implement a mock product catalog and shopping cart system.
-- [ ] **Step 8: E-commerce Store (Troubleshooting):**
-    - [ ] **Debug Cart behavior:** The cart is currently "acting crazy" and needs investigation in the next session.
+- [ ] **Step 9: E-commerce Checkout (Snipcart Re-integration):**
+    - [ ] Perform a clean integration of Snipcart v3 based on official documentation.
+    - [ ] Ensure persistence and reliable event binding across Astro View Transitions.
+    - [ ] Implement secure "Add to Cart" logic within the `StoreButton`.
+- [ ] **Step 10: User Experience & i18n:**
+    - [ ] Add "My Favorites" link to the `UserAuth` dropdown (if not already fully integrated).
+    - [ ] Research and implement `astro-i18next` for multi-language support.

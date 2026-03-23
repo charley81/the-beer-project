@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 const envSchema = z.object({
   BETTER_AUTH_URL: z.string().url().default('http://localhost:4321'),
+  PUBLIC_SNIPCART_API_KEY: z.string().optional(),
 })
 
 const _env = envSchema.safeParse(import.meta.env)

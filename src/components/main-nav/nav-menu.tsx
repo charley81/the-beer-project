@@ -1,7 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import { Menu } from 'lucide-react'
+import { Menu, ShoppingCart } from 'lucide-react'
 import { navLinks } from '@/lib/navigation'
 import { UserAuth } from './user-auth'
 import {
@@ -68,10 +68,24 @@ export function NavMenu({
 
         <div className="h-6 w-px bg-nav-fg/20 mx-2" />
 
+        <button className="snipcart-checkout relative p-2 text-nav-fg hover:text-primary transition-colors cursor-pointer group">
+          <ShoppingCart size={24} />
+          <span className="snipcart-items-count absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-[.snipcart-cart-not-empty]:opacity-100">
+            0
+          </span>
+        </button>
+
         <UserAuth session={initialSession} />
       </div>
 
       <div className="lg:hidden flex items-center gap-3">
+        <button className="snipcart-checkout relative p-2 text-nav-fg hover:text-primary transition-colors cursor-pointer group">
+          <ShoppingCart size={28} />
+          <span className="snipcart-items-count absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center opacity-0 group-[.snipcart-cart-not-empty]:opacity-100">
+            0
+          </span>
+        </button>
+
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
