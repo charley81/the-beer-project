@@ -64,12 +64,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       define:vars={{ apiKey: import.meta.env.PUBLIC_SNIPCART_API_KEY }}
     >
       window.SnipcartSettings = {
-        publicApiKey: apiKey,
+        publicApiKey: apiKey || '',
         loadStrategy: 'on-user-interaction',
         modalStyle: 'side',
         addProductBehavior: 'none',
-      }
+      };
+
+      // Ensure the key is set on the div even if it was missing at build time
+      document.addEventListener('DOMContentLoaded', () => {
+        const snipcartDiv = document.getElementById('snipcart');
+        if (snipcartDiv && !snipcartDiv.getAttribute('data-api-key') && window.SnipcartSettings.publicApiKey) {
+          snipcartDiv.setAttribute('data-api-key', window.SnipcartSettings.publicApiKey);
+        }
+      });
     </script>
+    <script
+      async
+      src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"
+    ></script>
   </head>
 
   <body
@@ -90,7 +102,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <slot />
     </main>
 
-    <div transition:persist="snipcart-wrapper" id="snipcart-persistent-container">
+    <div transition:persist="snipcart-wrapper">
       <div
         id="snipcart"
         hidden
@@ -100,11 +112,5 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       >
       </div>
     </div>
-
-    <script
-      is:inline
-      async
-      src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"
-    ></script>
   </body>
 </html>
