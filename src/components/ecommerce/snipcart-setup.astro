@@ -1,0 +1,58 @@
+---
+/**
+ * LESSON: Infrastructure as Component
+ * We isolate 3rd party scripts into their own component. This keeps the BaseLayout 
+ * clean and makes the e-commerce logic easy to toggle or replace.
+ */
+---
+
+<!-- Snipcart Base CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.css"
+/>
+
+<script
+  is:inline
+  define:vars={{ apiKey: import.meta.env.PUBLIC_SNIPCART_API_KEY }}
+>
+  window.SnipcartSettings = {
+    publicApiKey: apiKey || '',
+    loadStrategy: 'on-user-interaction',
+    modalStyle: 'side',
+    addProductBehavior: 'none',
+  };
+
+  // Add subtle feedback when items are added
+  document.addEventListener('snipcart.ready', () => {
+    Snipcart.events.on('item.adding', (item) => {
+      // Dispatch a custom event that our React Toaster can hear
+      window.dispatchEvent(new CustomEvent('toast', { 
+        detail: { message: `${item.name} added to cart!`, type: 'success' } 
+      }));
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const snipcartDiv = document.getElementById('snipcart');
+    if (snipcartDiv && !snipcartDiv.getAttribute('data-api-key') && window.SnipcartSettings.publicApiKey) {
+      snipcartDiv.setAttribute('data-api-key', window.SnipcartSettings.publicApiKey);
+    }
+  });
+</script>
+
+<div transition:persist="snipcart-wrapper">
+  <div
+    id="snipcart"
+    hidden
+    data-api-key={import.meta.env.PUBLIC_SNIPCART_API_KEY}
+    data-config-modal-style="side"
+    data-config-add-product-behavior="none"
+  >
+  </div>
+</div>
+
+<script
+  async
+  src="https://cdn.snipcart.com/themes/v3.0.31/default/snipcart.js"
+></script>
