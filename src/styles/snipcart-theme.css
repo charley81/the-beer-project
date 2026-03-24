@@ -1,0 +1,99 @@
+#snipcart {
+  /* Fonts */
+  --font-family: var(--font-fredoka), ui-sans-serif, system-ui, sans-serif;
+
+  /* Global Colors */
+  --color-default: var(--foreground);
+  --color-link: var(--primary);
+  --color-link-hover: var(--primary);
+  --color-error: var(--destructive);
+  --color-success: oklch(0.627 0.265 149.213);
+  --color-icon: var(--foreground);
+
+  /* Backgrounds */
+  --bgColor-modal: var(--background);
+  --bgColor-modal-full: var(--background);
+  --bgColor-info: var(--secondary);
+  --bgColor-error: var(--destructive);
+  --bgColor-success: oklch(0.627 0.265 149.213);
+
+  /* Borders */
+  --borderColor-default: var(--border);
+  --borderColor-error: var(--destructive);
+
+  /* Inputs */
+  --bgColor-input: var(--background);
+  --bgColor-input-hover: var(--background);
+  --bgColor-input-focus: var(--background);
+  --color-input: var(--foreground);
+  --borderColor-input: var(--border);
+  --borderColor-input-focus: var(--primary);
+
+  /* Buttons - Primary */
+  --bgColor-buttonPrimary: var(--primary);
+  --bgColor-buttonPrimary-hover: var(--primary);
+  --bgColor-buttonPrimary-active: var(--primary);
+  --bgColor-buttonPrimary-focus: var(--primary);
+  --bgColor-buttonPrimary-disabled: var(--muted);
+  --color-buttonPrimary: var(--primary-foreground);
+  --color-buttonPrimary-hover: var(--primary-foreground);
+  --borderColor-buttonPrimary: var(--primary);
+
+  /* Buttons - Secondary */
+  --bgColor-buttonSecondary: var(--secondary);
+  --bgColor-buttonSecondary-hover: var(--accent);
+  --color-buttonSecondary: var(--secondary-foreground);
+  --borderColor-buttonSecondary: var(--border);
+
+  /* Badges */
+  --bgColor-badge: var(--primary);
+  --bgColor-badge-active: var(--primary);
+  --color-badge: var(--primary-foreground);
+  --color-badge-active: var(--primary-foreground);
+}
+
+/* Custom UI Polish Overrides */
+
+.snipcart-modal__container {
+  font-family: var(--font-fredoka), sans-serif !important;
+}
+
+.snipcart-cart-header__title {
+  font-weight: 900 !important;
+  font-style: italic !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.05em !important;
+}
+
+.snipcart-item-line__title {
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+}
+
+.snipcart-button {
+  transition: all 0.2s ease-in-out !important;
+  border-radius: 9999px !important;
+}
+
+.snipcart-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.snipcart-cart-summary {
+  border-radius: var(--radius) !important;
+  background-color: var(--secondary) !important;
+}
+
+.snipcart-cart-summary__title {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+}
+
+.snipcart-item-quantity__btn {
+  border-radius: 4px !important;
+}
+
+.snipcart-modal {
+  backdrop-filter: blur(8px);
+}

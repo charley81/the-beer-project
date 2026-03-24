@@ -4,6 +4,7 @@ import MainNav from '../components/main-nav/main-nav.astro'
 import { ClientRouter } from 'astro:transitions'
 import { Toaster } from '@/components/ui/sonner'
 import '../styles/global.css'
+import '../styles/snipcart-theme.css'
 
 interface Props {
   title: string
@@ -68,15 +69,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
         loadStrategy: 'on-user-interaction',
         modalStyle: 'side',
         addProductBehavior: 'none',
-      };
+      }
 
       // Ensure the key is set on the div even if it was missing at build time
       document.addEventListener('DOMContentLoaded', () => {
-        const snipcartDiv = document.getElementById('snipcart');
-        if (snipcartDiv && !snipcartDiv.getAttribute('data-api-key') && window.SnipcartSettings.publicApiKey) {
-          snipcartDiv.setAttribute('data-api-key', window.SnipcartSettings.publicApiKey);
+        const snipcartDiv = document.getElementById('snipcart')
+        if (
+          snipcartDiv &&
+          !snipcartDiv.getAttribute('data-api-key') &&
+          window.SnipcartSettings.publicApiKey
+        ) {
+          snipcartDiv.setAttribute(
+            'data-api-key',
+            window.SnipcartSettings.publicApiKey,
+          )
         }
-      });
+      })
     </script>
     <script
       async
