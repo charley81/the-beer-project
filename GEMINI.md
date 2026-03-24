@@ -18,6 +18,7 @@
 - `src/pages/`: Contains Astro routes. The blog posts and content are also located here under `blog/`.
 - `src/components/`: A mix of `.astro` and `.tsx` (React) components.
   - `ui/`: Lower-level UI primitives (Button, Card, Input, etc.).
+  - `ecommerce/`: E-commerce specific components (Snipcart setup, Cart Badge).
 - `src/layouts/`: Shared layouts like `base-layout.astro` and `blog-layout.astro`.
 - `src/content.config.ts`: Configures the **Astro Content Layer** (specifically the `blog` collection).
 - `src/styles/global.css`: Central CSS file using Tailwind 4 `@import` syntax and custom theme variables.
@@ -55,34 +56,32 @@ This project uses `pnpm` (inferred from `pnpm-lock.yaml`).
 - [x] User authentication with Better-Auth (Sign Up, Login, Logout).
 - [x] CRUD functionality for managing beer/brewery favorites.
 - [ ] Internationalization (i18n) support.
-- [ ] E-commerce functionality (Store).
+- [x] E-commerce functionality (Snipcart v3).
 - [ ] Expanded blog with more content.
 
-## Recent Progress (Auth, Store & UI Refinement)
+## Recent Progress (Auth, Store & E-commerce Refactor)
 
 - [x] **Better Auth Overhaul (Production Ready):**
     - [x] Resolved production `NetworkError` by migrating to relative paths in `auth-client.ts`.
     - [x] Corrected DB provider to `sqlite` in `auth.ts` for Astro DB (LibSQL) compatibility.
     - [x] Implemented global session middleware (`src/middleware.ts`) to populate `Astro.locals`.
-    - [x] Added project-wide type safety for auth locals in `src/env.d.ts`.
-    - [x] Refactored Favorites page, Main Navigation, and Astro Actions to use the efficient `Astro.locals` pattern.
-- [x] **Store Front-End Implementation:**
-    - [x] Designed and built the `/store` landing page with premium product cards and OKLCH effects.
-    - [x] Implemented dynamic product detail pages at `/products/[slug]`.
-    - [x] Created a reusable `StoreButton` component as a placeholder for checkout logic.
+- [x] **Store & Snipcart Integration:**
+    - [x] Designed and built the `/store` landing page and dynamic product detail pages.
+    - [x] Performed a clean, persistent integration of Snipcart v3 compatible with Astro View Transitions.
+    - [x] Resolved critical bugs: production API key injection, hydration mismatches, and zero-quantity refresh errors.
+- [x] **Senior Engineering Refactor (E-commerce):**
+    - [x] **Separation of Concerns:** Extracted Snipcart infrastructure into `SnipcartSetup.astro`.
+    - [x] **D.R.Y. UI:** Created a reusable `CartBadge.tsx` to handle hydration and visibility logic in one place.
+    - [x] **UX Improvements:** Implemented a global listener to trigger `sonner` toasts when items are added to the cart.
 - [x] **Codebase Cleanup:**
-    - [x] Removed redundant `products/index.astro` in favor of the unified `store.astro`.
-    - [x] Deleted unused `api/blog` CRUD endpoint (now using Content Layer).
-    - [x] Removed initial Snipcart attempt to prepare for a clean integration.
-- [x] **UI Polishing:**
-    - [x] Refined "Back to Blog" button with a static, transparent-on-hover style for better consistency.
+    - [x] Standardized Snipcart environment variable handling in `src/lib/env.ts` (optional at build, required at runtime).
 
 ## Current Status / Next Steps
 
-- [ ] **Step 9: E-commerce Checkout (Snipcart Re-integration):**
-    - [ ] Perform a clean integration of Snipcart v3 based on official documentation.
-    - [ ] Ensure persistence and reliable event binding across Astro View Transitions.
-    - [ ] Implement secure "Add to Cart" logic within the `StoreButton`.
+- [ ] **Step 9.5: Snipcart Branding & Polish:**
+    - [x] Basic CSS variable theming implemented in `snipcart-theme.css`.
+    - [ ] Add specific theme branding (custom icons, advanced layout overrides) to match the site's high-end aesthetic.
+    - [ ] Refine micro-interactions (badge "pop" animations).
 - [ ] **Step 10: User Experience & i18n:**
     - [ ] Add "My Favorites" link to the `UserAuth` dropdown (if not already fully integrated).
     - [ ] Research and implement `astro-i18next` for multi-language support.
