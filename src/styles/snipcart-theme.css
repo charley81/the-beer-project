@@ -56,6 +56,14 @@
 
 .snipcart-modal__container {
   font-family: var(--font-fredoka), sans-serif !important;
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+.snipcart-cart-header {
+  background-color: var(--background) !important;
+  border-bottom: 2px solid var(--primary) !important;
+  padding: 2rem 1.5rem !important;
 }
 
 .snipcart-cart-header__title {
@@ -63,11 +71,20 @@
   font-style: italic !important;
   text-transform: uppercase !important;
   letter-spacing: -0.05em !important;
+  color: var(--foreground) !important;
+}
+
+.snipcart-item-line {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding-bottom: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
 }
 
 .snipcart-item-line__title {
   font-weight: 700 !important;
   font-size: 1.125rem !important;
+  color: var(--foreground) !important;
 }
 
 .snipcart-button {
@@ -83,30 +100,73 @@
 .snipcart-cart-summary {
   border-radius: var(--radius) !important;
   background-color: var(--secondary) !important;
+  border: 2px solid var(--primary) !important;
+  padding: 1.5rem !important;
+  margin-top: 2rem !important;
 }
 
 .snipcart-cart-summary__title {
   font-weight: 900 !important;
   text-transform: uppercase !important;
+  color: var(--foreground) !important;
 }
 
 .snipcart-item-quantity__btn {
   border-radius: 4px !important;
+  background-color: var(--secondary) !important;
+  color: var(--foreground) !important;
 }
 
 .snipcart-modal {
   backdrop-filter: blur(8px);
 }
 
-/* Hide badge when empty or 0 for a cleaner professional look */
-.snipcart-items-count:is(:empty, [data-items-count="0"], :contains("0")) {
-  display: none !important;
+/* Better Scrollbar for the cart side modal */
+.snipcart-modal__container ::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Since :contains is not standard CSS yet, we use a more robust attribute selector 
-   if Snipcart provides it, or a simple zero-content check */
-[data-snipcart-items-count="0"] .snipcart-items-count,
-.snipcart-items-count:empty {
-  display: none !important;
+.snipcart-modal__container ::-webkit-scrollbar-track {
+  background: var(--secondary);
+}
+
+.snipcart-modal__container ::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+/* Item Image Polish */
+.snipcart-item-line__image {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid var(--border) !important;
+  padding: 4px !important;
+  background: white !important;
+}
+
+/* Empty Cart State Polish */
+.snipcart-empty-cart__title {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  font-style: italic !important;
+  margin-top: 2rem !important;
+  color: var(--foreground) !important;
+}
+
+.snipcart-empty-cart {
+  padding: 4rem 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Custom Icons / SVG colors */
+.snipcart__icon--brand path {
+  fill: var(--primary) !important;
+}
+
+.snipcart-item-line__header {
+  margin-bottom: 0.5rem !important;
 }
 
