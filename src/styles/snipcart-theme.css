@@ -97,3 +97,16 @@
 .snipcart-modal {
   backdrop-filter: blur(8px);
 }
+
+/* Hide badge when empty or 0 for a cleaner professional look */
+.snipcart-items-count:is(:empty, [data-items-count="0"], :contains("0")) {
+  display: none !important;
+}
+
+/* Since :contains is not standard CSS yet, we use a more robust attribute selector 
+   if Snipcart provides it, or a simple zero-content check */
+[data-snipcart-items-count="0"] .snipcart-items-count,
+.snipcart-items-count:empty {
+  display: none !important;
+}
+
